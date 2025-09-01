@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Home -->
+  <url>
+    <loc>https://nntapdiya-wq.github.io/The-Career-Guru-Namit-Tapdiya/</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Exams (IIT-JEE, NEET, UPSC, NDA, SSC, Banking, etc.) -->
+  <url>
+    <loc>https://nntapdiya-wq.github.io/The-Career-Guru-Namit-Tapdiya/#exams</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Coaching -->
+  <url>
+    <loc>https://nntapdiya-wq.github.io/The-Career-Guru-Namit-Tapdiya/#coaching</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Colleges -->
+  <url>
+    <loc>https://nntapdiya-wq.github.io/The-Career-Guru-Namit-Tapdiya/#colleges</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Study Plan -->
+  <url>
+    <loc>https://nntapdiya-wq.github.io/The-Career-Guru-Namit-Tapdiya/#study-plan</loc>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>
