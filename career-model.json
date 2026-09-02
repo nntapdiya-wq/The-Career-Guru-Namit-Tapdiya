@@ -1,1 +1,270 @@
-{"version":"1.0.0","type":"content-based-nearest-neighbour","note":"A transparent prototype ML model. It starts from curated career-profile examples and learns from explicit user feedback stored locally. It is not a validated psychometric or admissions model.","features":["science","commerce","arts","engineering","hotel","diploma","other","neet","jee","upsc","ca","law","design","mba","hotel","nda","other","high-pay","work-life-balance","social-impact","entrepreneurship","academic","creativity","medicine","biology","health","engineering","technology","coding","ai","data","finance","accounting","business","law","policy","government","design","creative","hospitality","travel","defence","research","science","management","entrepreneurship"],"classes":["Medicine","Engineering & Technology","Data Science & AI","Pure Science & Research","Chartered Accountancy","Business & Management","Law","Civil Services","Design & Creative","Hospitality & Tourism","Defence","Psychology & Social Impact"],"samples":[{"y":0,"x":["science","neet","social-impact","academic","medicine","biology","health"]},{"y":1,"x":["science","engineering","jee","high-pay","entrepreneurship","engineering","technology","coding"]},{"y":2,"x":["science","engineering","jee","high-pay","academic","data","ai","coding","technology"]},{"y":3,"x":["science","academic","research","science","biology","technology"]},{"y":4,"x":["commerce","ca","high-pay","academic","finance","accounting"]},{"y":5,"x":["commerce","mba","high-pay","entrepreneurship","business","management","finance"]},{"y":6,"x":["arts","law","high-pay","social-impact","law","policy"]},{"y":7,"x":["arts","upsc","social-impact","academic","policy","government"]},{"y":8,"x":["arts","design","creativity","entrepreneurship","design","creative"]},{"y":9,"x":["hotel","hotel","entrepreneurship","work-life-balance","hospitality","travel","business"]},{"y":10,"x":["science","nda","social-impact","academic","defence","government"]},{"y":11,"x":["arts","science","social-impact","academic","health","research","government"]}]}
+{
+  "version": "2.1",
+  "type": "transparent-k-nearest-neighbour",
+  "features": [
+    "science",
+    "commerce",
+    "arts",
+    "engineering",
+    "hotel",
+    "diploma",
+    "other",
+    "neet",
+    "jee",
+    "upsc",
+    "ca",
+    "law",
+    "design",
+    "mba",
+    "nda",
+    "high-pay",
+    "work-life-balance",
+    "social-impact",
+    "entrepreneurship",
+    "academic",
+    "creativity",
+    "medicine",
+    "biology",
+    "health",
+    "technology",
+    "coding",
+    "data",
+    "finance",
+    "accounting",
+    "business",
+    "law_policy",
+    "government",
+    "hospitality",
+    "travel",
+    "defence",
+    "research",
+    "management",
+    "analytical",
+    "numerical",
+    "verbal",
+    "scientific",
+    "people",
+    "creative",
+    "leadership",
+    "detail",
+    "empathy",
+    "hands_on",
+    "risk",
+    "stability",
+    "impact",
+    "communication",
+    "patience",
+    "autonomy",
+    "routine",
+    "ambiguity",
+    "environment"
+  ],
+  "classes": [
+    "Medicine & Healthcare",
+    "Engineering & Technology",
+    "Data Science & AI",
+    "Pure Science & Research",
+    "Finance & Accounting",
+    "Business & Management",
+    "Law & Public Policy",
+    "Civil Services",
+    "Design & Creative",
+    "Hospitality & Tourism",
+    "Defence & Public Safety",
+    "Psychology & Social Impact"
+  ],
+  "samples": [
+    {
+      "y": 0,
+      "x": [
+        "science",
+        "neet",
+        "social-impact",
+        "academic",
+        "medicine",
+        "biology",
+        "health",
+        "people",
+        "scientific",
+        "empathy",
+        "patience",
+        "detail"
+      ]
+    },
+    {
+      "y": 1,
+      "x": [
+        "science",
+        "engineering",
+        "jee",
+        "high-pay",
+        "entrepreneurship",
+        "technology",
+        "coding",
+        "analytical",
+        "numerical",
+        "hands_on",
+        "autonomy"
+      ]
+    },
+    {
+      "y": 2,
+      "x": [
+        "science",
+        "engineering",
+        "jee",
+        "high-pay",
+        "academic",
+        "data",
+        "technology",
+        "coding",
+        "analytical",
+        "numerical",
+        "research",
+        "autonomy"
+      ]
+    },
+    {
+      "y": 3,
+      "x": [
+        "science",
+        "academic",
+        "research",
+        "scientific",
+        "analytical",
+        "numerical",
+        "patience",
+        "detail",
+        "autonomy"
+      ]
+    },
+    {
+      "y": 4,
+      "x": [
+        "commerce",
+        "ca",
+        "high-pay",
+        "academic",
+        "finance",
+        "accounting",
+        "numerical",
+        "detail",
+        "analytical",
+        "stability",
+        "patience"
+      ]
+    },
+    {
+      "y": 5,
+      "x": [
+        "commerce",
+        "mba",
+        "high-pay",
+        "entrepreneurship",
+        "business",
+        "management",
+        "leadership",
+        "communication",
+        "people",
+        "risk"
+      ]
+    },
+    {
+      "y": 6,
+      "x": [
+        "arts",
+        "law",
+        "high-pay",
+        "social-impact",
+        "law_policy",
+        "government",
+        "verbal",
+        "communication",
+        "analytical",
+        "persuasion",
+        "people"
+      ]
+    },
+    {
+      "y": 7,
+      "x": [
+        "arts",
+        "upsc",
+        "social-impact",
+        "academic",
+        "government",
+        "impact",
+        "verbal",
+        "communication",
+        "leadership",
+        "stability",
+        "patience"
+      ]
+    },
+    {
+      "y": 8,
+      "x": [
+        "arts",
+        "design",
+        "creativity",
+        "entrepreneurship",
+        "creative",
+        "design",
+        "communication",
+        "spatial",
+        "autonomy"
+      ]
+    },
+    {
+      "y": 9,
+      "x": [
+        "hotel",
+        "hotel",
+        "entrepreneurship",
+        "work-life-balance",
+        "hospitality",
+        "travel",
+        "business",
+        "people",
+        "communication",
+        "leadership",
+        "hands_on"
+      ]
+    },
+    {
+      "y": 10,
+      "x": [
+        "science",
+        "nda",
+        "social-impact",
+        "academic",
+        "defence",
+        "government",
+        "leadership",
+        "hands_on",
+        "stability",
+        "people",
+        "patience"
+      ]
+    },
+    {
+      "y": 11,
+      "x": [
+        "arts",
+        "science",
+        "social-impact",
+        "academic",
+        "health",
+        "research",
+        "government",
+        "people",
+        "empathy",
+        "verbal",
+        "impact",
+        "patience"
+      ]
+    }
+  ],
+  "training_note": "Curated career-profile archetypes plus explicit local user feedback. This is an exploratory recommendation model, not a representative population dataset. It must not be presented as a validated psychometric test, admission predictor, or probability of success.",
+  "learning": "When a user confirms the top result, the user's feature vector is stored locally as a feedback example for future nearest-neighbour comparisons. No feedback is uploaded by this static GitHub Pages implementation."
+}
