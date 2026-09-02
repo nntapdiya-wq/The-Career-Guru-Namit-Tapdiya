@@ -83,7 +83,7 @@ details{border-top:1px solid var(--border);padding:12px 0}summary{cursor:pointer
 <section class="card"><div class="section-title"><strong>How to use your plan</strong></div>
 <details><summary>Is this a guaranteed career prediction?</summary><p class="small">No. It is a decision-support tool. Career outcomes depend on performance, eligibility, preferences, changing admission rules and many factors not captured here.</p></details>
 <details><summary>How should I use the college shortlist?</summary><p class="small">Treat it as a starting point. Always check the institution's official admission page for the current year, eligibility, entrance route, fees, deadlines and counselling rules.</p></details>
-<details><summary>How are careers scored?</summary><p class="small">The prototype combines stream compatibility, selected exams, career traits and interest keywords. It is a heuristic—not a psychometric assessment.</p></details>
+<details><summary>How are careers scored?</summary><p class="small">The model compares your profile with learned career-profile examples using nearest-neighbour similarity. Explicit feedback can add new local training examples. It is not a validated psychometric assessment.</p></details>
 </section>
 </section>
 
@@ -197,9 +197,12 @@ function error(v){$("errorMsg").textContent=v;$("errorMsg").classList.remove("hi
 function clearError(){$("errorMsg").textContent="";$("errorMsg").classList.add("hidden")}
 function inferGoal(stream,es){const p=["neet","jee","upsc","ca","law","design","mba","hotel","nda"];const e=p.find(x=>es.includes(x));return e?pretty(e)+" Path":stream==="diploma"?"Vocational / Diploma Path":"Explore Multiple Tracks"}
 function scoreCareers(stream,es,ts,prefs){
-
-const words=(prefs.toLowerCase().match(/[a-z]+/g)||[]);
-return (careerDatabase[stream]||[]).map(c=>{let s=0;if(c[1].some(e=>es.includes(e)))s+=50;if(c[1].length===0)s+=10;s+=c[2].filter(t=>ts.includes(t)).length*15;s+=words.filter(w=>(c[0]+" "+c[2].join(" ")).toLowerCase().includes(w)).length*5;return {name:c[0],score:s}}).sort((a,b)=>b.score-a.score)}
+  lastFeatureVector=featureVector(stream,es,ts,prefs);
+  if(!lastFeatureVector)return [];
+  const pred=predictML(lastFeatureVector);
+  lastPrediction=pred;
+  return pred;
+}
 function step(parent,text){const d=document.createElement("div");d.className="plan-step";d.textContent=text;parent.appendChild(d)}
 function saveProfile(){
 try{localStorage.setItem("careerGuruProfile",JSON.stringify({
