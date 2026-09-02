@@ -1,717 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="google-site-verification" content="9nC8ZmbJn53iL6jEoPh0GI5TpBOeKJ7EyjmcVEAAy34" />
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="9nC8ZmbJn53iL6jEoPh0GI5TpBOeKJ7EyjmcVEAAy34">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The Career Guru | Namit Tapdiya</title>
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta name="description" content="Personalized career & exam guidance with NDA details, coaching finder and top college suggestions.">
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet" />
+<meta name="description" content="Personalized career and exam guidance with career matching, study planning and indicative college shortlists.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap">
 <style>
-  :root {
-    --bg:#f7f4ef;
-    --card:#ffffff;
-    --radius:16px;
-    --shadow:0 35px 70px -15px rgba(70,80,120,0.08);
-    --text:#1f2d3a;
-    --muted:#7d8491;
-    --primary:#d8a47f;
-    --primary-dark:#c37f50;
-    --accent:#ffece0;
-    --border:#e7e1da;
-    --transition:400ms cubic-bezier(.23,.13,.15,1);
-    --focus-glow:rgba(211,164,120,.3);
-    font-family:'Lato',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-  }
-  *{box-sizing:border-box;scroll-behavior:smooth;}
-  body{margin:0;background:linear-gradient(135deg,#faf7f2 0%, #f0ebe4 100%);color:var(--text);}
-  .container{max-width:1050px;margin:0 auto;padding:1rem 1rem;}
-  h1{font-size:2.3rem;font-weight:900;text-align:center;margin:0;line-height:1.1;}
-  .sub{margin:6px 0 16px;font-size:.9rem;text-align:center;color:var(--muted);}
-  .header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;padding:8px 0;}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.1rem;}
-  .byline{font-size:.9rem;color:#555;margin-left:4px;}
-  .pill{display:inline-block;background:rgba(211,164,120,.1);color:var(--primary-dark);padding:6px 16px;border-radius:999px;font-weight:600;font-size:.65rem;letter-spacing:1px;transition:all var(--transition);}
-  .card{background:var(--card);border-radius:16px;padding:1.5rem;margin:1rem 0;position:relative;overflow:hidden;box-shadow:var(--shadow);transform:translateY(10px);opacity:0;animation:enter 0.6s forwards;}
-  @keyframes enter{to{transform:none;opacity:1;}}
-  .grid{display:grid;gap:1.5rem;}
-  .two{grid-template-columns:repeat(auto-fit,minmax(250px,1fr));}
-  .label{display:block;font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;color:#6e5f50;}
-  .muted{color:var(--muted);}
-  .pill-select{display:flex;flex-wrap:wrap;gap:8px;}
-  .select-pill{padding:10px 16px;border-radius:999px;border:2px solid var(--border);cursor:pointer;transition:all var(--transition);font-size:.9rem;position:relative;user-select:none;background:#fff;color:var(--text);}
-  .select-pill.active{background:var(--primary);color:#fff;border-color:var(--primary);}
-  .select-pill:hover{filter:brightness(1.03);}
-  input, textarea, select{width:100%;padding:14px 16px;border-radius:12px;border:1px solid var(--border);font-size:1rem;outline:none;transition:all var(--transition);background:#fdf9f3;font-family:'Lato',sans-serif;}
-  input:focus, textarea:focus, select:focus{box-shadow:0 0 18px var(--focus-glow);border-color:var(--primary-dark);}
-  .button{background:linear-gradient(135deg,var(--primary-dark),var(--primary));border:none;color:#fff;padding:16px 26px;border-radius:14px;cursor:pointer;font-size:1rem;font-weight:700;letter-spacing:1px;display:inline-flex;align-items:center;gap:8px;transition:filter .25s,var(--transition);position:relative;overflow:hidden;font-family:'Lato',sans-serif;}
-  .button:hover{filter:brightness(1.08);}
-  .button:active{transform:scale(.97);}
-  .badge{background:rgba(243,225,208,1);color:var(--primary-dark);padding:8px 16px;border-radius:10px;font-weight:600;font-size:.75rem;display:inline-block;margin-right:6px;}
-  .error{background:#ffe7e2;border:1px solid #ffb1a5;color:#9d3f28;padding:12px;border-radius:10px;margin-bottom:12px;display:flex;gap:8px;font-size:.9rem;align-items:center;}
-  .best-track{border:2px solid var(--primary-dark);background:rgba(211,164,120,0.1);border-radius:14px;padding:16px;margin-bottom:12px;display:flex;gap:14px;align-items:start;position:relative;}
-  .plan-step{background:#fff8f2;border:1px solid rgba(217,164,120,.3);padding:14px;border-radius:12px;margin-bottom:12px;display:flex;gap:12px;align-items:flex-start;font-size:.9rem;}
-  .college-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px;margin:6px;flex:1;min-width:190px;position:relative;overflow:hidden;transition:all var(--transition);}
-  .college-card strong{display:block;margin-bottom:6px;}
-  .top-colleges{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px;}
-  .small{font-size:.75rem;color:var(--muted);}
-  .section-title{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
-  .footer{margin-top:2rem;text-align:center;font-size:.65rem;color:var(--muted);}
-  .coach-result{background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px;margin:8px 0;}
-  .inline{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-  @media (min-width:900px){.two{grid-template-columns:repeat(2,1fr);}}
+:root{--bg:#f7f4ef;--card:#fff;--text:#1f2d3a;--muted:#7d8491;--primary:#d8a47f;--primary-dark:#c37f50;--border:#e7e1da;--focus:rgba(211,164,120,.3);--shadow:0 25px 60px -20px rgba(70,80,120,.12);font-family:Lato,system-ui,sans-serif}
+*{box-sizing:border-box;scroll-behavior:smooth}body{margin:0;background:linear-gradient(135deg,#faf7f2,#f0ebe4);color:var(--text)}
+button,input,textarea,select{font:inherit}.container{max-width:1050px;margin:auto;padding:16px}.header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;padding:8px 0}
+.brand{font-size:1.5rem;font-weight:900;color:var(--primary-dark)}.byline{font-size:.85rem;color:#555;font-weight:400}.sub{text-align:center;color:var(--muted);font-size:.9rem;margin:8px 0 18px}
+.card{background:var(--card);border-radius:16px;padding:24px;margin:16px 0;box-shadow:var(--shadow)}.grid{display:grid;gap:20px}.two{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.label{display:block;font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin:0 0 7px;color:#6e5f50}.pill-select{display:flex;flex-wrap:wrap;gap:8px}
+.select-pill{padding:9px 14px;border:2px solid var(--border);border-radius:999px;background:#fff;color:var(--text);cursor:pointer}.select-pill:hover{border-color:var(--primary)}.select-pill.active{background:var(--primary);border-color:var(--primary);color:#fff}
+.select-pill:focus-visible,.button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+input,textarea,select{width:100%;padding:13px 15px;border:1px solid var(--border);border-radius:12px;background:#fdf9f3;color:var(--text)}input:focus,textarea:focus,select:focus{border-color:var(--primary-dark);box-shadow:0 0 16px var(--focus)}
+.button{border:0;border-radius:14px;background:linear-gradient(135deg,var(--primary-dark),var(--primary));color:#fff;padding:14px 22px;font-weight:700;cursor:pointer}.button:hover{filter:brightness(1.06)}.button:active{transform:scale(.98)}
+.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}.badge{display:inline-block;background:#f3e1d0;color:var(--primary-dark);padding:7px 12px;border-radius:10px;font-size:.75rem;font-weight:700}
+.small{font-size:.78rem;color:var(--muted)}.error{background:#ffe7e2;border:1px solid #ffb1a5;color:#9d3f28;padding:12px;border-radius:10px;margin-bottom:14px}.plan-step,.coach-result,.college-card{background:#fff8f2;border:1px solid var(--border);border-radius:12px;padding:13px;margin:8px 0}
+.college-card{background:#fff;min-width:190px;flex:1}.top-colleges{display:flex;flex-wrap:wrap;gap:8px}.best-track{border:2px solid var(--primary-dark);background:#fff8f2;border-radius:14px;padding:16px}.footer{text-align:center;color:var(--muted);font-size:.7rem;margin:28px 0}.hidden{display:none!important}
 </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <div class="brand">
-        <div style="font-size:1.5rem; color: var(--primary-dark);">The Career Guru</div>
-        <div class="byline">By Namit Tapdiya</div>
-      </div>
-      <div><div class="pill">Smart Career & Exam Planner</div></div>
-    </div>
+<main class="container">
+<header class="header"><div class="brand">The Career Guru <span class="byline">By Namit Tapdiya</span></div><span class="badge">Smart Career & Exam Planner</span></header>
+<p class="sub">Build a personalized career direction, study strategy and indicative college shortlist from your profile.</p>
 
-    <div class="sub">
-      A modern, adaptive platform that identifies your stream and exam, corrects mismatches, highlights the best high-earning specialization, and gives exam-filtered college suggestions with a strategic study plan.
-    </div>
+<section class="card">
+<div class="section-title"><strong>Your Profile</strong><span class="badge">Start Here</span></div>
+<div id="errorMsg" class="error hidden" role="alert" aria-live="polite"></div>
+<div class="grid two">
+<div><label class="label" for="name">Full Name</label><input id="name" autocomplete="name" placeholder="e.g., Rahul Verma"></div>
+<div><span class="label">Current Stream</span><div id="streamWrapper" class="pill-select" role="group" aria-label="Current stream"></div></div>
+<div><span class="label">Target Exam(s)</span><div id="examWrapper" class="pill-select" role="group" aria-label="Target exams"></div></div>
+<div><label class="label" for="prefs">Interests / Preferences</label><input id="prefs" placeholder="e.g., innovation, policy, finance"></div>
+<div style="grid-column:1/-1"><label class="label" for="difficulties">Weak / Difficult Topics</label><textarea id="difficulties" rows="2" placeholder="e.g., Organic Chemistry, Essay Writing"></textarea></div>
+<div><label class="label" for="hours">Weekly Study Hours</label><input id="hours" type="number" min="1" max="168" step="1" placeholder="e.g., 20"></div>
+<div><span class="label">Career Traits</span><div id="careerPrefWrapper" class="pill-select" role="group" aria-label="Career traits"></div></div>
+<div><label class="label" for="rank">Estimated Rank</label><input id="rank" type="number" min="1" step="1" placeholder="e.g., 1500"><div class="small">Optional. Rank guidance is indicative, not an admission prediction.</div></div>
+</div>
+<div style="margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap"><button id="generateBtn" class="button" type="button">Generate Smart Plan</button><span class="small">Recommendations are guidance, not guaranteed outcomes.</span></div>
+</section>
 
-    <!-- Input Section (original preserved; NDA pill included) -->
-    <div class="card" id="inputCard">
-      <div class="section-title">
-        <div><strong>Your Profile</strong></div>
-        <div class="badge">Start Here</div>
-      </div>
-      <div id="errorMsg" style="display:none;" class="error">
-        <div>⚠️</div><div id="errorText">Fix required</div>
-      </div>
-      <div class="grid two">
-        <div>
-          <div class="label">Full Name</div>
-          <input id="name" placeholder="e.g., Rahul Verma" />
-        </div>
-        <div>
-          <div class="label">Current Stream</div>
-          <div id="streamWrapper" class="pill-select">
-            <div class="select-pill" data-value="science">Science</div>
-            <div class="select-pill" data-value="commerce">Commerce</div>
-            <div class="select-pill" data-value="arts">Arts</div>
-            <div class="select-pill" data-value="engineering">Engineering</div>
-            <div class="select-pill" data-value="hotel">Hotel Management</div>
-            <div class="select-pill" data-value="diploma">Diploma</div>
-            <div class="select-pill" data-value="other">Other</div>
-          </div>
-        </div>
-        <div>
-          <div class="label">Target Exam(s)</div>
-          <div id="examWrapper" class="pill-select">
-            <div class="select-pill" data-value="neet">NEET</div>
-            <div class="select-pill" data-value="jee">JEE</div>
-            <div class="select-pill" data-value="upsc">UPSC</div>
-            <div class="select-pill" data-value="ca">CA</div>
-            <div class="select-pill" data-value="law">Law</div>
-            <div class="select-pill" data-value="design">Design</div>
-            <div class="select-pill" data-value="mba">MBA</div>
-            <div class="select-pill" data-value="hotel">Hotel Mgmt</div>
-            <div class="select-pill" data-value="nda">NDA</div>
-            <div class="select-pill" data-value="other">Other</div>
-          </div>
-        </div>
-        <div>
-          <div class="label">Interests / Preferences</div>
-          <input id="prefs" placeholder="e.g., innovation, policy, finance" />
-        </div>
-        <div style="grid-column:1 / -1;">
-          <div class="label">Weak / Difficult Topics</div>
-          <textarea id="difficulties" rows="2" placeholder="e.g., Organic Chemistry, Essay Writing, Accounting Standards"></textarea>
-          <div class="small">If you enter a mismatch (e.g., CA student entering NEET topic), you'll be asked to correct it.</div>
-        </div>
-        <div>
-          <div class="label">Weekly Study Hours</div>
-          <input id="hours" type="number" placeholder="e.g., 20" />
-        </div>
-        <div>
-          <div class="label">Career Traits</div>
-          <div id="careerPrefWrapper" class="pill-select">
-            <div class="select-pill" data-value="high-pay">High Pay</div>
-            <div class="select-pill" data-value="work-life-balance">Work-Life Balance</div>
-            <div class="select-pill" data-value="social-impact">Social Impact</div>
-            <div class="select-pill" data-value="entrepreneurship">Entrepreneurship</div>
-            <div class="select-pill" data-value="academic">Academic</div>
-          </div>
-        </div>
-        <div>
-          <div class="label">Estimated Rank</div>
-          <input id="rank" placeholder="e.g., 1500" />
-          <div class="small">Used to suggest realistic colleges for rank-based exams.</div>
-        </div>
-      </div>
-      <div style="margin-top:16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
-        <button class="button" onclick="generate()">Generate Smart Plan</button>
-        <div class="small" style="margin-left:auto;">Exam-aware, corrected, high-earning track & colleges.</div>
-      </div>
-    </div>
+<section id="output" class="hidden" aria-live="polite">
+<section class="card"><div class="section-title"><strong>Overview</strong><span id="badgeGoal" class="badge"></span></div>
+<div class="grid two"><div><strong>Name:</strong> <span id="outName"></span><br><strong>Stream:</strong> <span id="outStream"></span><br><strong>Exam(s):</strong> <span id="outExams"></span></div>
+<div><strong>Interests:</strong> <span id="outPrefs"></span><br><strong>Weak Topics:</strong> <span id="outDiffs"></span><br><strong>Weekly Time:</strong> <span id="outHours"></span></div>
+<div><strong>Traits:</strong> <span id="outCareerPref"></span><br><strong>Rank:</strong> <span id="outRank"></span></div></div></section>
 
-    <!-- Output (Best Colleges, Study Plan etc. — unchanged behavior) -->
-    <div id="output" style="display:none;">
-      <!-- Overview -->
-      <div class="card">
-        <div class="section-title">
-          <div><strong>Overview</strong></div>
-          <div class="badge" id="badgeGoal">...</div>
-        </div>
-        <div class="grid two">
-          <div>
-            <div><strong>Name:</strong> <span id="outName"></span></div>
-            <div><strong>Stream:</strong> <span id="outStream"></span></div>
-            <div><strong>Exam(s):</strong> <span id="outExams"></span></div>
-          </div>
-          <div>
-            <div><strong>Interests:</strong> <span id="outPrefs"></span></div>
-            <div><strong>Weak Topics:</strong> <span id="outDiffs"></span></div>
-            <div><strong>Weekly Time:</strong> <span id="outHours"></span></div>
-          </div>
-          <div>
-            <div><strong>Traits:</strong> <span id="outCareerPref"></span></div>
-            <div><strong>Rank:</strong> <span id="outRank"></span></div>
-          </div>
-        </div>
-      </div>
+<section class="card"><div class="section-title"><strong>Best Career Track</strong><span class="small">Ranked from your stream, exam, traits and interests</span></div><div id="bestTrackContainer"></div></section>
 
-      <!-- Best Career Track -->
-      <div class="card">
-        <div class="section-title">
-          <div><strong>Best Career Track</strong></div>
-          <div class="small">Highest earning / most aspirational specialization for your exam</div>
-        </div>
-        <div id="bestTrackContainer"></div>
-      </div>
+<section class="card"><div class="section-title"><strong>Indicative College Shortlist</strong><span class="small">Verify current admissions and eligibility on official sources</span></div><div id="topCollegesFiltered" class="top-colleges"></div><div id="collegeByRank"></div></section>
 
-      <!-- Colleges -->
-      <div class="card">
-        <div class="section-title">
-          <div><strong>Best Colleges</strong></div>
-          <div class="small">Filtered by selected exam(s) and rank</div>
-        </div>
-        <div class="grid two">
-          <div>
-            <div><strong>Top Colleges (exam-based)</strong></div>
-            <div id="topCollegesFiltered" class="top-colleges"></div>
-          </div>
-          <div>
-            <div><strong>College by Rank</strong></div>
-            <div id="collegeByRank"></div>
-          </div>
-        </div>
-      </div>
+<section class="card"><div class="section-title"><strong>Study Strategy</strong><span class="small">Eight-week framework</span></div><div id="studyPlan"></div></section>
+<section class="card"><div class="section-title"><strong>Preparation Cycle</strong><span class="small">Goal → Learn → Practice → Test → Adjust</span></div><div id="examCycle"></div></section>
+<section class="card"><div class="section-title"><strong>Resources & Tips</strong></div><div id="resources"></div></section>
+</section>
 
-      <!-- Study Plan -->
-      <div class="card">
-        <div class="section-title">
-          <div><strong>Study Strategy</strong></div>
-          <div class="small">Weekly plan with emphasis on weak areas</div>
-        </div>
-        <div id="studyPlan"></div>
-      </div>
+<section class="card" id="coachingFinder">
+<div class="section-title"><strong>Coaching Finder</strong><span class="small">Only national brands are shown; local branch availability must be verified.</span></div>
+<div class="grid two"><div><label class="label" for="coachExam">Exam</label><select id="coachExam"></select></div><div><label class="label" for="coachCity">City</label><input id="coachCity" list="cityList" placeholder="e.g., Pune"><datalist id="cityList"></datalist></div></div>
+<div style="margin-top:12px"><button id="coachBtn" class="button" type="button">Show Coaching</button></div><div id="coachResults" aria-live="polite"></div>
+</section>
+<footer class="footer">Designed by Namit Tapdiya. Verify official exam authorities, admission portals and institute websites before making high-stakes decisions.</footer>
+</main>
 
-      <!-- Preparation Cycle -->
-      <div class="card">
-        <div class="section-title">
-          <div><strong>Preparation Cycle</strong></div>
-          <div class="small">Goal → Learn → Practice → Test → Adjust</div>
-        </div>
-        <div id="examCycle"></div>
-      </div>
-
-      <!-- Resources -->
-      <div class="card">
-        <div class="section-title">
-          <div><strong>Resources & Tips</strong></div>
-          <div class="small">Books, habits, mindset</div>
-        </div>
-        <div id="resources"></div>
-      </div>
-    </div>
-
-    <!-- Coaching Finder (ONLY coachings — colleges NOT repeated here) -->
-    <div class="card" id="coachingFinder">
-      <div class="section-title">
-        <div><strong>Find Best Coaching</strong></div>
-        <div class="small">Choose exam & your city to see suggested institutes (coaching only)</div>
-      </div>
-      <div class="grid two">
-        <div>
-          <div class="label">Exam</div>
-          <select id="coachExam">
-            <option value="">Select exam</option>
-            <option value="neet">NEET</option>
-            <option value="jee">JEE</option>
-            <option value="upsc">UPSC</option>
-            <option value="ca">CA</option>
-            <option value="law">Law</option>
-            <option value="design">Design</option>
-            <option value="mba">MBA</option>
-            <option value="hotel">Hotel Mgmt</option>
-            <option value="nda">NDA</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-        <div>
-          <div class="label">City</div>
-          <input id="coachCity" list="cityList" placeholder="Start typing your city (e.g., Indore, Jorhat, Kochi)" />
-          <datalist id="cityList"></datalist>
-        </div>
-      </div>
-      <div style="margin-top:12px;" class="inline">
-        <button class="button" onclick="findCoaching()">Show Coaching</button>
-        <div class="small">Results show coaching institutes only — colleges are shown in the "Best Colleges" card above.</div>
-      </div>
-      <div id="coachResults" style="margin-top:12px;"></div>
-    </div>
-
-    <div class="footer">
-      Designed by Namit Tapdiya. This tool gives guidance; verify with official exam authorities for up-to-date syllabus and high-stakes decisions.
-    </div>
-  </div>
-
-  <script>
-    /* ---------- Data (preserved + NDA + coaching info generation) ---------- */
-
-    const careerDatabase = {
-      science: [
-        {name:"MBBS / NEET", exams:["neet"], traits:["social-impact","academic"], type:"Medical"},
-        {name:"Engineering via JEE", exams:["jee"], traits:["high-pay","entrepreneurship"], type:"Engineering"},
-        {name:"Research / PhD", exams:[], traits:["academic"], type:"Research"},
-        {name:"Data Science / AI", exams:[], traits:["high-pay"], type:"Tech"},
-        {name:"Defence via NDA", exams:["nda"], traits:["social-impact"], type:"Defence"}
-      ],
-      commerce: [
-        {name:"Chartered Accountant (CA)", exams:["ca"], traits:["high-pay","academic"], type:"Finance"},
-        {name:"MBA / Business", exams:["mba"], traits:["entrepreneurship","high-pay"], type:"Business"},
-        {name:"Corporate Law", exams:["law"], traits:["high-pay"], type:"Law"},
-        {name:"Civil Services", exams:["upsc"], traits:["social-impact"], type:"Public"},
-        {name:"Defence via NDA", exams:["nda"], traits:["social-impact"], type:"Defence"}
-      ],
-      arts: [
-        {name:"Civil Services (UPSC)", exams:["upsc"], traits:["social-impact","academic"], type:"Public"},
-        {name:"Design & Creative", exams:["design"], traits:["creativity"], type:"Design"},
-        {name:"Journalism / Media", exams:[], traits:["social-impact"], type:"Media"},
-        {name:"Psychology / Counseling", exams:[], traits:["social-impact"], type:"Health"},
-        {name:"Defence via NDA", exams:["nda"], traits:["social-impact"], type:"Defence"}
-      ],
-      engineering: [
-        {name:"Core Engineering (JEE)", exams:["jee"], traits:["high-pay"], type:"Engineering"},
-        {name:"Product / Tech Management", exams:[], traits:["entrepreneurship"], type:"Tech"},
-        {name:"Technical Civil Services", exams:["upsc"], traits:["academic"], type:"Public"},
-        {name:"Defence via NDA (Tech roles)", exams:["nda"], traits:["social-impact"], type:"Defence"}
-      ],
-      hotel: [
-        {name:"Hospitality Management", exams:["hotel"], traits:["work-life-balance"], type:"Service"},
-        {name:"Event Management", exams:[], traits:["entrepreneurship"], type:"Business"}
-      ],
-      diploma: [
-        {name:"Polytechnic / Vocational", exams:[], traits:["work-life-balance"], type:"Technical"},
-      ],
-      other: [
-        {name:"Startup / Entrepreneurship", exams:[], traits:["entrepreneurship"], type:"Business"},
-        {name:"Digital Content Creation", exams:[], traits:["creativity"], type:"Media"},
-      ]
-    };
-
-    const collegePools = {
-      neet: ["AIIMS Delhi", "Christian Medical College Vellore", "JIPMER Puducherry", "Kasturba Medical College", "Maulana Azad Medical College"],
-      jee: ["IIT Madras", "IIT Delhi", "IIT Bombay", "NIT Trichy", "BITS Pilani"],
-      upsc: ["LBSNAA Mussoorie (training)", "State Administrative Services Institutes", "IAS Training Institutes"],
-      ca: ["ICAI Regional Centres", "SRCC (Commerce)", "St. Xavier's College"],
-      law: ["NLSIU Bangalore", "NLU Delhi", "NALSAR Hyderabad"],
-      design: ["NID Ahmedabad", "NIFT Delhi", "Srishti Institute"],
-      mba: ["IIM Ahmedabad", "IIM Bangalore", "XLRI Jamshedpur"],
-      hotel: ["IHM Mumbai", "IHM Delhi", "Oberoi Centre of Learning", "IHM Bangalore"],
-      nda: ["National Defence Academy (Pune)", "Indian Military Academy (Dehradun)", "Indian Naval Academy (Ezhimala, Kerala)", "Air Force Academy (Hyderabad)"]
-    };
-
-    const examSyllabi = {
-      neet: ["Biology: Human Physiology", "Chemistry: Organic", "Physics: Mechanics"],
-      jee: ["Mathematics: Calculus", "Physics: Electrodynamics", "Chemistry: Physical Chemistry"],
-      upsc: ["History", "Geography", "Polity", "Economics"],
-      ca: ["Accounting", "Taxation", "Audit"],
-      law: ["Legal Aptitude", "Current Affairs", "Logical Reasoning"],
-      design: ["Design Thinking", "Visualization"],
-      mba: ["Quantitative", "Verbal", "Business Awareness"],
-      hotel: ["Hospitality Basics", "Customer Service"],
-      nda: [
-        "Mathematics: Algebra, Trigonometry, Calculus, Coordinate Geometry, Probability & Statistics",
-        "GAT: English, Physics, Chemistry, General Science, History, Geography, Current Affairs",
-        "Physical Aptitude: Running, Push-ups, Sit-ups, Chin-ups, Long/High jump basics"
-      ]
-    };
-
-    const bestSpecializations = {
-      neet: [
-        {title:"Cardiologist", reason:"High demand and specialist physician roles."},
-        {title:"Neurosurgeon", reason:"Top surgical specialty with strong pay."}
-      ],
-      jee: [
-        {title:"AI/ML Engineer", reason:"High demand in tech industry."},
-        {title:"Data Scientist", reason:"Cross-domain high-value roles."}
-      ],
-      upsc: [
-        {title:"IAS Officer", reason:"Administrative leadership and stability."},
-        {title:"IFS Officer", reason:"Diplomatic service and global exposure."}
-      ],
-      ca: [{title:"International Tax Consultant", reason:"Global advisory roles."}],
-      law: [{title:"Corporate Lawyer", reason:"Lucrative roles with MNCs."}],
-      design: [{title:"UX Director", reason:"Leadership in product companies."}],
-      mba: [{title:"Strategy Consultant", reason:"Top consulting firm roles."}],
-      hotel: [{title:"Hospitality Chain Executive", reason:"Global hospitality leadership."}],
-      nda: [
-        {title:"Commissioned Officer (Army/Navy/Air Force)", reason:"Prestigious leadership role in Armed Forces."},
-        {title:"Technical Branch Officer", reason:"STEM-aligned roles for PCM candidates."}
-      ]
-    };
-
-    // National coaching brands (per exam)
-    const coachingByExam = {
-      neet: ["Aakash BYJU'S", "Allen Career Institute", "Resonance", "Physics Wallah (PW)", "Vedantu (online)"],
-      jee: ["Allen Career Institute", "FIITJEE", "Resonance", "Narayanas", "Physics Wallah (PW)"],
-      upsc: ["Vision IAS", "ForumIAS", "Drishti IAS", "NEXT IAS", "InsightsIAS"],
-      ca: ["JK Shah Classes", "Aldine CA", "Aaditya Jain Classes", "ETEN CA", "AKS"],
-      law: ["LegalEdge", "Career Launcher", "T.I.M.E.", "IMS"],
-      design: ["BRDS", "Pahal Design", "Silica", "Afdindia"],
-      mba: ["IMS", "T.I.M.E.", "Career Launcher", "Byju's Exam Prep"],
-      hotel: ["Career Launcher (IHM)", "EduGorilla HM", "IHM Training Centers"],
-      nda: ["Cavalier India", "Major Kalshi Classes", "Centurion Defence Academy", "Minerva Academy", "Baalnoi Academy"],
-      other: ["Career Launcher", "T.I.M.E.", "IMS", "Unacademy (online)"]
-    };
-
-    // All states & cities (from your list)
-    const statesAndCities = {
-      "Andhra Pradesh":["Visakhapatnam","Vijayawada","Tirupati","Guntur","Kurnool","Nellore","Kakinada","Rajahmundry","Kadapa","Ongole"],
-      "Arunachal Pradesh":["Itanagar","Naharlagun","Pasighat","Roing","Tawang","Ziro","Bomdila","Alo","Namsai","Anini"],
-      "Assam":["Guwahati","Silchar","Dibrugarh","Jorhat","Nagaon","Tinsukia","Bongaigaon","Goalpara","Tezpur","Sivasagar"],
-      "Bihar":["Patna","Gaya","Bhagalpur","Muzaffarpur","Bihar Sharif","Darbhanga","Arrah","Begusarai","Katihar","Purnia"],
-      "Chhattisgarh":["Raipur","Bhilai","Durg","Korba","Bilaspur","Jagdalpur","Ambikapur","Rajnandgaon","Dhamtari","Kawardha"],
-      "Goa":["Panaji","Margao","Vasco da Gama","Ponda","Mapusa","Bicholim","Sanquelim","Valpoi","Curchorem","Quepem"],
-      "Gujarat":["Ahmedabad","Surat","Vadodara","Rajkot","Gandhinagar","Jamnagar","Bhavnagar","Junagadh","Anand","Bharuch"],
-      "Haryana":["Faridabad","Gurugram (Gurgaon)","Panipat","Ambala","Hisar","Rohtak","Karnal","Sonipat","Panchkula","Yamunanagar"],
-      "Himachal Pradesh":["Shimla","Dharamshala","Mandi","Kullu","Manali","Solan","Una","Chamba","Hamirpur","Baddi"],
-      "Jharkhand":["Ranchi","Jamshedpur","Dhanbad","Bokaro","Hazaribagh","Giridih","Deoghar","Phusro","Ramgarh","Medininagar"],
-      "Karnataka":["Bengaluru (Bangalore)","Hubli-Dharwad","Mysuru (Mysore)","Mangaluru (Mangalore)","Belagavi (Belgaum)","Gulbarga","Tumakuru (Tumkur)","Davangere","Shivamogga (Shimoga)","Hosapete (Hospet)"],
-      "Kerala":["Thiruvananthapuram (Trivandrum)","Kochi (Cochin)","Kozhikode (Calicut)","Thrissur (Trichur)","Malappuram","Kannur","Kollam","Alappuzha (Alleppey)","Palakkad","Kottayam"],
-      "Madhya Pradesh":["Indore","Bhopal","Jabalpur","Gwalior","Ujjain","Sagar","Dewas","Satna","Khandwa","Rewa"],
-      "Maharashtra":["Mumbai","Pune","Nagpur","Thane","Nashik","Aurangabad","Solapur","Amravati","Kolhapur","Bhiwandi"],
-      "Manipur":["Imphal","Thoubal","Bishnupur","Churachandpur","Ukhrul","Senapati","Tamenglong","Kakching","Jiribam","Kangpokpi"],
-      "Meghalaya":["Shillong","Tura","Jowai","Nongstoin","Baghmara","Williamnagar","Resubelpara","Mairang","Khliehriat","Sohra (Cherrapunjee)"],
-      "Mizoram":["Aizawl","Lunglei","Saiha","Champhai","Serchhip","Kolasib","Mamit","Kanhaba","Thenzawl","Vairengte"],
-      "Nagaland":["Kohima","Dimapur","Mokokchung","Wokha","Tuensang","Zunheboto","Phek","Mon","Kiphire","Longleng"],
-      "Odisha":["Bhubaneswar","Cuttack","Rourkela","Brahmapur","Sambalpur","Puri","Balasore","Bhadrak","Baripada","Jharsuguda"],
-      "Punjab":["Ludhiana","Amritsar","Jalandhar","Patiala","Mohali","Bathinda","Hoshiarpur","Batala","Moga","Pathankot"],
-      "Rajasthan":["Jaipur","Jodhpur","Kota","Bikaner","Ajmer","Udaipur","Bhilwara","Alwar","Sikar","Pali"],
-      "Sikkim":["Gangtok","Namchi","Geyzing","Mangan","Singtam","Rangpo","Jorethang","Lachung","Yuksom","Pelling"],
-      "Tamil Nadu":["Chennai","Coimbatore","Madurai","Tiruchirappalli (Trichy)","Salem","Tiruppur","Tirunelveli","Erode","Thoothukudi (Tuticorin)","Thanjavur (Tanjore)"],
-      "Telangana":["Hyderabad","Warangal","Nizamabad","Karimnagar","Khammam","Mahbubnagar","Ramagundam","Siddipet","Miryalaguda","Suryapet"],
-      "Tripura":["Agartala","Udaipur","Dharmanagar","Kailasahar","Ambassa","Belonia","Sonamura","Teliamura","Melaghar","Kumarghat"],
-      "Uttarakhand":["Dehradun","Haridwar","Roorkee","Haldwani","Rudrapur","Kashipur","Rishikesh","Pithoragarh","Mussoorie","Nainital"],
-      "Uttar Pradesh":["Lucknow","Kanpur","Ghaziabad","Agra","Meerut","Varanasi","Prayagraj (Allahabad)","Bareilly","Aligarh","Moradabad"],
-      "West Bengal":["Kolkata","Asansol","Siliguri","Durgapur","Howrah","Bardhaman","Malda","Bahrampore","Habra","Kharagpur"]
-    };
-
-    // Flatten city list
-    const allCities = Array.from(new Set(Object.values(statesAndCities).flat()));
-
-    /* ---------- UI & pill setup (original logic) ---------- */
-
-    function setupPills(id, single=false){
-      const el = document.getElementById(id);
-      if(!el) return;
-      el.addEventListener("click", e=>{
-        const pill = e.target.closest(".select-pill");
-        if(!pill) return;
-        if(single){
-          Array.from(document.querySelectorAll(`#${id} .select-pill`)).forEach(p=>p.classList.remove("active"));
-          pill.classList.add("active");
-        } else {
-          pill.classList.toggle("active");
-        }
-      });
-    }
-    setupPills("streamWrapper", true);
-    setupPills("examWrapper");
-    setupPills("careerPrefWrapper");
-
-    function getSelected(id){
-      return Array.from(document.querySelectorAll(`#${id} .select-pill.active`)).map(el=>el.dataset.value);
-    }
-
-    function showError(msg){
-      const e=document.getElementById("errorMsg");
-      document.getElementById("errorText").innerText=msg;
-      e.style.display="flex";
-    }
-
-    function capitalize(s){return s? s.charAt(0).toUpperCase()+s.slice(1):"";}
-
-    function inferGoal(stream, exams){
-      if(exams.includes("neet")) return "Medical Path (NEET)";
-      if(exams.includes("jee")) return "Engineering Path (JEE)";
-      if(exams.includes("upsc")) return "Civil Services (UPSC)";
-      if(exams.includes("ca")) return "Finance / CA";
-      if(exams.includes("nda")) return "Defence (NDA)";
-      if(exams.includes("hotel")) return "Hospitality";
-      if(stream==="diploma") return "Vocational / Diploma";
-      return "Explore Multiple Tracks";
-    }
-
-    function planStep(txt){
-      const d=document.createElement("div");
-      d.className="plan-step";
-      d.innerHTML=txt;
-      return d;
-    }
-
-    /* ---------- Main generate() (keeps colleges in Best Colleges section) ---------- */
-
-    function generate(){
-      document.getElementById("errorMsg").style.display="none";
-      const name=document.getElementById("name").value.trim()||"Student";
-      const streams=getSelected("streamWrapper");
-      const exams=getSelected("examWrapper");
-      const prefs=document.getElementById("prefs").value.trim();
-      const difficulties=document.getElementById("difficulties").value.trim();
-      const hours=parseInt(document.getElementById("hours").value)||10;
-      const careerPrefs=getSelected("careerPrefWrapper");
-      const rank=document.getElementById("rank").value.trim();
-
-      if(!streams.length){ showError("Select your stream."); return; }
-      if(!exams.length){ showError("Select at least one exam."); return; }
-      const stream=streams[0];
-
-      // mismatch validation (NDA allowed across streams)
-      const mismatches=[];
-      exams.forEach(e=>{
-        if((e==="neet"||e==="jee") && !["science","engineering"].includes(stream)) mismatches.push(e);
-        if(e==="ca" && stream!=="commerce") mismatches.push(e);
-        if(e==="hotel" && stream!=="hotel") mismatches.push(e);
-      });
-      if(mismatches.length){
-        showError(`Exam(s) ${mismatches.map(x=>x.toUpperCase()).join(", ")} conflict with stream. Adjust selections.`);
-        return;
-      }
-
-      // fill summary
-      document.getElementById("outName").innerText=name;
-      document.getElementById("outStream").innerText=capitalize(stream);
-      document.getElementById("outExams").innerText=exams.map(e=>e.toUpperCase()).join(", ");
-      document.getElementById("outPrefs").innerText=prefs||"None";
-      document.getElementById("outDiffs").innerText=difficulties||"None";
-      document.getElementById("outHours").innerText=hours+" hrs/week";
-      document.getElementById("outCareerPref").innerText=careerPrefs.join(", ")||"None";
-      document.getElementById("outRank").innerText=rank||"N/A";
-      document.getElementById("badgeGoal").innerText=inferGoal(stream, exams);
-
-      // best career track
-      const bestEl=document.getElementById("bestTrackContainer");
-      bestEl.innerHTML="";
-      const primaryExam=exams[0];
-      const bestList=bestSpecializations[primaryExam]||[];
-      if(bestList.length){
-        const top=bestList[0];
-        const container=document.createElement("div");
-        container.className="best-track";
-        container.innerHTML=`
-          <div style="flex:1;">
-            <div style="font-size:1.2rem;font-weight:700;">${top.title}</div>
-            <div class="small">${top.reason}</div>
-          </div>
-          <div style="min-width:120px;display:flex;flex-direction:column;gap:4px;">
-            <div class="badge">Top Choice</div>
-            <div class="small">For exam: ${primaryExam.toUpperCase()}</div>
-          </div>`;
-        bestEl.appendChild(container);
-        if(bestList.length>1){
-          const others=document.createElement("div");
-          others.style.marginTop="8px";
-          others.innerHTML="<div style='font-weight:600;margin-bottom:4px;'>Other high-paying specializations:</div>";
-          bestList.slice(1).forEach(o=>{
-            const d=document.createElement("div");
-            d.className="career-box";
-            d.style.marginBottom="6px";
-            d.innerHTML=`<div><strong>${o.title}</strong></div><div class="small">${o.reason}</div>`;
-            others.appendChild(d);
-          });
-          bestEl.appendChild(others);
-        }
-      }
-
-      // colleges filtered by exam (ONLY here)
-      const topCollegesEl=document.getElementById("topCollegesFiltered");
-      topCollegesEl.innerHTML="";
-      const collegeSet=new Set();
-      exams.forEach(ex=>{
-        (collegePools[ex]||[]).forEach(c=>collegeSet.add(c));
-      });
-      if(!collegeSet.size){
-        (collegePools[stream]||[]).forEach(c=>collegeSet.add(c));
-      }
-      Array.from(collegeSet).slice(0,6).forEach(c=>{
-        const card=document.createElement("div");
-        card.className="college-card";
-        card.innerHTML=`<strong>${c}</strong><div class="small">Suggested based on ${exams.map(e=>e.toUpperCase()).join(", ")}</div>`;
-        topCollegesEl.appendChild(card);
-      });
-
-      // college by rank
-      const collegeByRankEl=document.getElementById("collegeByRank");
-      collegeByRankEl.innerHTML="";
-      if(rank){
-        const r=parseInt(rank);
-        let suggestion="Improve rank for better options.";
-        if(exams.includes("jee")){
-          suggestion= r<=500? "Top IITs / NITs" : r<=5000? "Good NITs / State Engineering" : "Regional engineering colleges";
-        } else if(exams.includes("neet")){
-          suggestion= r<=100? "Top government medical colleges" : r<=1000? "Strong private medical colleges" : "Allied health fields / improve rank";
-        } else if(exams.includes("upsc")){
-          suggestion= r<=100? "High cadre IAS/IPS" : "State services or reattempt";
-        } else if(exams.includes("ca")){
-          suggestion="Focus on clearing levels; rank not critical.";
-        } else if(exams.includes("nda")){
-          suggestion="Focus on clearing written + SSB; physical fitness & medicals are crucial.";
-        }
-        collegeByRankEl.innerHTML=`<div class="career-box"><div style="font-weight:700;">Based on rank ${r}:</div><div class="small">${suggestion}</div></div>`;
-      }
-
-      // study plan (includes NDA physical training when NDA selected)
-      const studyPlanEl=document.getElementById("studyPlan");
-      studyPlanEl.innerHTML="";
-      studyPlanEl.appendChild(planStep(`<strong>Primary Goal:</strong> ${inferGoal(stream, exams)}`));
-      exams.forEach(ex=>{
-        const syllabus=examSyllabi[ex]||["Core topics placeholder"];
-        studyPlanEl.appendChild(planStep(`<strong>${ex.toUpperCase()} Core Syllabus:</strong> ${syllabus.join(", ")}`));
-      });
-      if(difficulties) studyPlanEl.appendChild(planStep(`<strong>Weak Areas:</strong> ${difficulties} — allocate 30% extra time.`));
-      // 8-week plan with NDA physical progression
-      const weeks=8;
-      const perWeek=Math.max(1, Math.floor(hours/weeks));
-      for(let w=1; w<=weeks; w++){
-        let stepText = `Week ${w}: Spend ~${perWeek} hrs. Learn new topics, revise earlier ones, practice weak areas, and self-test.`;
-        if(exams.includes("nda")){
-          stepText += ` Include physical training: running (intervals), push-ups, sit-ups, chin-ups, flexibility and basic plyometrics.`;
-          if(w>=6) stepText += ` Increase intensity; begin mock SSB physical drills and group tasks practice.`;
-        }
-        studyPlanEl.appendChild(planStep(stepText));
-      }
-
-      // preparation cycle
-      const examCycleEl=document.getElementById("examCycle");
-      examCycleEl.innerHTML="";
-      ["Set clear target & break syllabus","Active learning & notes","Practice with error analysis","Weekly mocks & review","Refine based on feedback"].forEach(s=>{
-        examCycleEl.appendChild(planStep(s));
-      });
-
-      // resources
-      const resEl=document.getElementById("resources");
-      resEl.innerHTML="";
-      resEl.appendChild(planStep("NEET / JEE: NCERT + previous years + topic-wise practice."));
-      resEl.appendChild(planStep("UPSC: Standard books + current affairs + answer writing."));
-      resEl.appendChild(planStep("CA: ICAI structured revision + mocks."));
-      resEl.appendChild(planStep("NDA: Practice Maths & GAT daily; include progressive running, bodyweight strength training, and medical checks."));
-      resEl.appendChild(planStep("General: Pomodoro, rest, reflection."));
-
-      document.getElementById("output").style.display="block";
-      window.scrollTo({top:0,behavior:"smooth"});
-    }
-
-    /* ---------- Coaching Finder: uses national brands + local templates for every city ---------- */
-
-    // Fill datalist with all cities
-    (function fillCityDatalist(){
-      const dl = document.getElementById("cityList");
-      allCities.forEach(city=>{
-        const opt = document.createElement("option");
-        opt.value = city;
-        dl.appendChild(opt);
-      });
-    })();
-
-    function normalizeCity(input){
-      const lc = (input||"").trim().toLowerCase();
-      if(!lc) return "";
-      const found = allCities.find(c => c.toLowerCase()===lc);
-      if(found) return found;
-      const starts = allCities.find(c => c.toLowerCase().startsWith(lc));
-      if(starts) return starts;
-      const incl = allCities.find(c => c.toLowerCase().includes(lc));
-      return incl || (input||"").trim();
-    }
-
-    function findCoaching(){
-      const exam = document.getElementById("coachExam").value;
-      const rawCity = document.getElementById("coachCity").value;
-      const resultsDiv = document.getElementById("coachResults");
-      resultsDiv.innerHTML = "";
-
-      if(!exam){ resultsDiv.innerHTML = "<div class='coach-result'>Please select an exam.</div>"; return; }
-      if(!rawCity){ resultsDiv.innerHTML = "<div class='coach-result'>Please enter your city.</div>"; return; }
-
-      const city = normalizeCity(rawCity);
-      const brands = coachingByExam[exam] || coachingByExam.other;
-
-      // Build per-city coaching suggestions:
-      // 1) show top national brands (tagged with city)
-      // 2) show a few realistic local-sounding institute names
-      // 3) keep it coaching-only (no colleges)
-      const nationalSuggestions = brands.map(b => `${b} — ${city}`);
-
-      // Local realistic templates
-      const localSuggestions = [
-        `${city} ${exam.toUpperCase()} Academy`,
-        `${city} ${exam.toUpperCase()} Institute`,
-        `${city} ${exam.toUpperCase()} Tutorial Centre`,
-        `${city} Success Hub (${exam.toUpperCase()})`
-      ];
-
-      // Small set of "popular local brand variants" to make lists more varied per city
-      const localVariants = [
-        `${city} Coaching Centre`,
-        `${city} Study Point`,
-        `${city} Career Academy`
-      ];
-
-      // Combine and dedupe
-      const combined = [...new Set([
-        ...nationalSuggestions.slice(0,4),
-        ...localSuggestions.slice(0,3),
-        ...localVariants.slice(0,2)
-      ])];
-
-      // Header
-      const prettyExam = exam.toUpperCase();
-      const header = document.createElement("div");
-      header.className = "coach-result";
-      header.innerHTML = `<strong>Coaching options for ${prettyExam} in ${city}</strong><div class="small">National brands + local suggestions (verify location & reviews).</div>`;
-      resultsDiv.appendChild(header);
-
-      // Show results
-      combined.forEach(s=>{
-        const r = document.createElement("div");
-        r.className = "coach-result";
-        r.textContent = s;
-        resultsDiv.appendChild(r);
-      });
-
-      // Helpful tips block (not colleges)
-      const tips = document.createElement("div");
-      tips.className = "coach-result";
-      tips.innerHTML = `<strong>Tips:</strong> Check batch size, demo classes, faculty profiles, past results and location commute time before joining.`;
-      resultsDiv.appendChild(tips);
-    }
-  </script>
+<script>
+"use strict";
+const streams=[["science","Science"],["commerce","Commerce"],["arts","Arts"],["engineering","Engineering"],["hotel","Hotel Management"],["diploma","Diploma"],["other","Other"]];
+const exams=[["neet","NEET"],["jee","JEE"],["upsc","UPSC"],["ca","CA"],["law","Law"],["design","Design"],["mba","MBA"],["hotel","Hotel Mgmt"],["nda","NDA"],["other","Other"]];
+const traits=[["high-pay","High Pay"],["work-life-balance","Work-Life Balance"],["social-impact","Social Impact"],["entrepreneurship","Entrepreneurship"],["academic","Academic"],["creativity","Creativity"]];
+const labels=Object.fromEntries([...streams,...exams,...traits]);
+const careerDatabase={
+science:[["MBBS / Medicine",["neet"],["social-impact","academic"]],["Engineering / Technology",["jee"],["high-pay","entrepreneurship"]],["Data Science / AI",[],["high-pay","academic"]],["Research / Science",[],["academic"]],["Defence via NDA",["nda"],["social-impact"]]],
+commerce:[["Chartered Accountancy",["ca"],["high-pay","academic"]],["MBA / Business",["mba"],["entrepreneurship","high-pay"]],["Corporate Law",["law"],["high-pay"]],["Civil Services",["upsc"],["social-impact","academic"]],["Defence via NDA",["nda"],["social-impact"]]],
+arts:[["Civil Services",["upsc"],["social-impact","academic"]],["Design & Creative",["design"],["creativity"]],["Law",["law"],["high-pay"]],["Psychology / Counselling",[],["social-impact"]],["Defence via NDA",["nda"],["social-impact"]]],
+engineering:[["Engineering / Technology",["jee"],["high-pay"]],["Product / Technology Management",[],["entrepreneurship","high-pay"]],["Data Science / AI",[],["high-pay","academic"]],["Defence / Technical Roles",["nda"],["social-impact"]]],
+hotel:[["Hospitality Management",["hotel"],["work-life-balance"]],["Event Management",[],["entrepreneurship"]]],
+diploma:[["Polytechnic / Vocational Career",[],["work-life-balance"]]],
+other:[["Entrepreneurship",[],["entrepreneurship"]],["Digital Content / Creative Work",[],["creativity"]]]
+};
+const collegePools={
+neet:["AIIMS New Delhi","Christian Medical College, Vellore","JIPMER, Puducherry","Maulana Azad Medical College, Delhi","Kasturba Medical College, Manipal"],
+jee:["IIT Madras","IIT Delhi","IIT Bombay","NIT Tiruchirappalli","BITS Pilani"],
+law:["NLSIU Bengaluru","NLU Delhi","NALSAR Hyderabad"],design:["NID Ahmedabad","NIFT Delhi","Srishti Manipal Institute"],
+mba:["IIM Ahmedabad","IIM Bangalore","XLRI Jamshedpur"],hotel:["IHM Mumbai","IHM Delhi","IHM Bengaluru"],
+nda:["National Defence Academy, Khadakwasla (training academy)"]
+};
+const examSyllabi={neet:["Biology","Chemistry","Physics"],jee:["Mathematics","Physics","Chemistry"],upsc:["History","Geography","Polity","Economy"],ca:["Accounting","Taxation","Audit"],law:["Legal Aptitude","Current Affairs","Logical Reasoning"],design:["Design Thinking","Visualisation"],mba:["Quantitative Aptitude","Verbal Ability","Business Awareness"],hotel:["Hospitality Basics","Customer Service"],nda:["Mathematics","General Ability Test","English","Current Affairs"],other:["Core subjects for your chosen pathway"]};
+const coachingByExam={
+neet:["Aakash Institute","ALLEN Career Institute","Resonance","Physics Wallah"],
+jee:["ALLEN Career Institute","FIITJEE","Resonance","Physics Wallah"],
+upsc:["Vision IAS","ForumIAS","Drishti IAS","NEXT IAS"],
+ca:["J.K. Shah Classes","Aldine CA","Aaditya Jain Classes"],
+law:["LegalEdge","Career Launcher","T.I.M.E.","IMS"],
+design:["BRDS","Pahal Design","Silica"],mba:["IMS","T.I.M.E.","Career Launcher"],hotel:["Career Launcher","EduGorilla"],
+nda:["Cavalier India","Major Kalshi Classes","Centurion Defence Academy"],other:["Career Launcher","T.I.M.E.","IMS"]
+};
+const cities=["Ahmedabad","Bengaluru","Bhopal","Bhubaneswar","Chandigarh","Chennai","Coimbatore","Dehradun","Delhi","Gandhinagar","Guwahati","Hyderabad","Indore","Jaipur","Jodhpur","Kochi","Kolkata","Lucknow","Mumbai","Nagpur","Nashik","Patna","Pune","Ranchi","Surat","Thane","Vadodara","Varanasi","Visakhapatnam"];
+const $=id=>document.getElementById(id);
+const pretty=v=>labels[v]||v;
+function makePills(id,data,single){
+const box=$(id);data.forEach(item=>{const b=document.createElement("button");b.type="button";b.className="select-pill";b.dataset.value=item[0];b.textContent=item[1];b.addEventListener("click",()=>{if(single)box.querySelectorAll(".select-pill").forEach(x=>x.classList.remove("active"));b.classList.toggle("active")});box.appendChild(b)})}
+function selected(id){return [...$(id).querySelectorAll(".select-pill.active")].map(x=>x.dataset.value)}
+function setText(id,v){$(id).textContent=v}
+function error(v){$("errorMsg").textContent=v;$("errorMsg").classList.remove("hidden")}
+function clearError(){$("errorMsg").textContent="";$("errorMsg").classList.add("hidden")}
+function inferGoal(stream,es){const p=["neet","jee","upsc","ca","law","design","mba","hotel","nda"];const e=p.find(x=>es.includes(x));return e?pretty(e)+" Path":stream==="diploma"?"Vocational / Diploma Path":"Explore Multiple Tracks"}
+function scoreCareers(stream,es,ts,prefs){
+const words=(prefs.toLowerCase().match(/[a-z]+/g)||[]);
+return (careerDatabase[stream]||[]).map(c=>{let s=0;if(c[1].some(e=>es.includes(e)))s+=50;if(c[1].length===0)s+=10;s+=c[2].filter(t=>ts.includes(t)).length*15;s+=words.filter(w=>(c[0]+" "+c[2].join(" ")).toLowerCase().includes(w)).length*5;return {name:c[0],score:s}}).sort((a,b)=>b.score-a.score)}
+function step(parent,text){const d=document.createElement("div");d.className="plan-step";d.textContent=text;parent.appendChild(d)}
+function generate(){
+clearError();
+const stream=selected("streamWrapper")[0],es=selected("examWrapper"),ts=selected("careerPrefWrapper");
+const name=$("name").value.trim()||"Student",prefs=$("prefs").value.trim(),diff=$("difficulties").value.trim(),hours=Number($("hours").value),rank=Number($("rank").value);
+if(!stream){error("Select your current stream.");return}
+if(!es.length){error("Select at least one target exam.");return}
+if(!Number.isInteger(hours)||hours<1||hours>168){error("Enter weekly study hours as a whole number from 1 to 168.");return}
+if($("rank").value.trim()&&(!Number.isInteger(rank)||rank<1)){error("Enter a valid positive rank or leave it blank.");return}
+const bad=[];es.forEach(e=>{if((e==="neet"||e==="jee")&&!["science","engineering"].includes(stream))bad.push(pretty(e));if(e==="ca"&&stream!=="commerce")bad.push(pretty(e));if(e==="hotel"&&stream!=="hotel")bad.push(pretty(e))});
+if(bad.length){error(bad.join(", ")+" is not aligned with the selected stream. Change the stream or exam.");return}
+setText("outName",name);setText("outStream",pretty(stream));setText("outExams",es.map(pretty).join(", "));setText("outPrefs",prefs||"None");setText("outDiffs",diff||"None");setText("outHours",hours+" hrs/week");setText("outCareerPref",ts.length?ts.map(pretty).join(", "):"None");setText("outRank",$("rank").value.trim()||"N/A");setText("badgeGoal",inferGoal(stream,es));
+const best=$("bestTrackContainer");best.replaceChildren();const ranked=scoreCareers(stream,es,ts,prefs);
+ranked.slice(0,4).forEach((c,i)=>{const d=document.createElement("div");d.className=i===0?"best-track":"plan-step";d.textContent=(i===0?"Best match: ":"Alternative: ")+c.name+" (match score "+c.score+")";best.appendChild(d)});
+const colleges=$("topCollegesFiltered");colleges.replaceChildren();const seen=new Set();es.forEach(e=>(collegePools[e]||[]).forEach(c=>seen.add(c)));
+if(!seen.size)step(colleges,"No fixed college shortlist is available for this pathway. Check the relevant official admission portal.");
+[...seen].slice(0,6).forEach(c=>{const d=document.createElement("div");d.className="college-card";const strong=document.createElement("strong");strong.textContent=c;const note=document.createElement("div");note.className="small";note.textContent="Indicative only — verify current eligibility, cut-offs and admissions.";d.append(strong,note);colleges.appendChild(d)});
+const rb=$("collegeByRank");rb.replaceChildren();if($("rank").value.trim()){let msg="Use the official counselling/admission portal for an exact rank-based shortlist.";if(es.includes("jee"))msg="JEE rank is not sufficient by itself; branch, category, state quota and counselling round matter.";else if(es.includes("neet"))msg="NEET rank is not sufficient by itself; category, domicile, counselling round and seat type matter.";const d=document.createElement("div");d.className="plan-step";d.textContent="Rank "+rank+": "+msg;rb.appendChild(d)}
+const plan=$("studyPlan");plan.replaceChildren();step(plan,"Primary goal: "+inferGoal(stream,es));es.forEach(e=>step(plan,pretty(e)+" core areas: "+(examSyllabi[e]||examSyllabi.other).join(", ")+"."));if(diff)step(plan,"Weak areas: "+diff+". Give these areas extra practice and review them through error analysis.");const weekly=Math.max(1,Math.round(hours/8));for(let w=1;w<=8;w++)step(plan,"Week "+w+": about "+weekly+" focused hours. Learn, practise, revise, take a short test, then review mistakes.");
+const cycle=$("examCycle");cycle.replaceChildren();["Set a measurable target","Learn concepts actively","Practise exam-style questions","Test under time pressure","Analyse errors and adjust"].forEach(x=>step(cycle,x));
+const res=$("resources");res.replaceChildren();es.forEach(e=>step(res,pretty(e)+": use the current official syllabus, trusted textbooks and previous-year questions."));step(res,"General: maintain an error log, use spaced revision, and protect sleep and recovery.");
+$("output").classList.remove("hidden");$("output").scrollIntoView({behavior:"smooth",block:"start"})
+}
+function populateCoaching(){const s=$("coachExam");s.replaceChildren();const first=document.createElement("option");first.value="";first.textContent="Select exam";s.appendChild(first);exams.forEach(e=>{const o=document.createElement("option");o.value=e[0];o.textContent=e[1];s.appendChild(o)});const dl=$("cityList");cities.forEach(c=>{const o=document.createElement("option");o.value=c;dl.appendChild(o)})}
+function findCoaching(){
+const exam=$("coachExam").value,city=$("coachCity").value.trim(),out=$("coachResults");out.replaceChildren();
+if(!exam){step(out,"Select an exam.");return}if(!city){step(out,"Enter a city.");return}
+step(out,"National coaching brands relevant to "+pretty(exam)+". This site does not verify local branch availability.");
+(coachingByExam[exam]||coachingByExam.other).forEach(n=>step(out,n+" — verify the current "+city+" centre or online batch on the institute's official website."));
+step(out,"Before joining, verify the official branch address, fees, faculty, batch size, refund policy and recent results.");
+}
+makePills("streamWrapper",streams,true);makePills("examWrapper",exams,false);makePills("careerPrefWrapper",traits,false);populateCoaching();
+$("generateBtn").addEventListener("click",generate);$("coachBtn").addEventListener("click",findCoaching);$("coachCity").addEventListener("keydown",e=>{if(e.key==="Enter")findCoaching()});
+</script>
 </body>
 </html>
-
-
-
-
-
-
