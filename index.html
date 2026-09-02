@@ -159,9 +159,24 @@ function learnFromFeedback(label,features){
   samples.push({y:label,x,at:Date.now()});
   localStorage.setItem(MODEL_KEY,JSON.stringify(samples.slice(-100)));
 }
+function featureLabel(token){
+  const names={analytical:"analytical thinking",numerical:"comfort with numbers",verbal:"verbal reasoning",scientific:"scientific curiosity",people:"people-focused work",creative:"creativity",leadership:"leadership",detail:"attention to detail",empathy:"empathy",hands_on:"practical work",risk:"risk tolerance",stability:"preference for stability",impact:"social impact",communication:"communication",patience:"persistence",autonomy:"independence",routine:"structured work",ambiguity:"comfort with uncertainty",technology:"technology interest",research:"research interest",business:"business interest",finance:"finance interest",health:"healthcare interest",travel:"travel",academic:"academic orientation",high-pay:"earning priority","work-life-balance":"work-life balance",entrepreneurship:"entrepreneurship"};
+  return names[token]||token.replaceAll("_"," ");
+}
+function topMatchedFeatures(sample){
+  if(!sample||!lastFeatureVector||!careerModel)return [];
+  const idx=careerModel.features.map((f,i)=>({f,i})).filter(x=>lastFeatureVector[x.i]&&sample.x.includes(x.f));
+  return idx.slice(0,5).map(x=>featureLabel(x.f));
+}
 function renderMLPrediction(pred){
   const best=$("bestTrackContainer");best.replaceChildren();
-  pred.forEach((p,i)=>{const d=document.createElement("div");d.className=i===0?"best-track":"plan-step";d.textContent=(i===0?"AI's strongest match: ":"Alternative learned match: ")+p.name+" ("+p.score+"% similarity signal)";best.appendChild(d)});
+  pred.forEach((p,i)=>{
+  const d=document.createElement("div");d.className=i===0?"best-track":"plan-step";
+  d.textContent=(i===0?"AI's strongest match: ":"Alternative learned match: ")+p.name+" ("+p.score+"% similarity signal)";
+  const source=(careerModel?.samples||[]).find(s=>s.y===p.y);
+  if(i===0){const why=document.createElement("div");why.className="small";why.style.marginTop="8px";why.textContent="Why it matched: "+(topMatchedFeatures(source).join(", ")||"your overall assessment profile")+". This explains similarity; it does not prove aptitude or future success.";d.appendChild(why)}
+  best.appendChild(d)
+});
   const stats=$("careerStats");stats.replaceChildren();
   [["Model","Nearest-neighbour ML"],["Candidates",String(pred.length)],["Learning","Local feedback enabled"]].forEach(x=>{const d=document.createElement("div");d.className="stat";const a=document.createElement("strong");a.textContent=x[1];const b=document.createElement("span");b.className="small";b.textContent=x[0];d.append(a,b);stats.appendChild(d)});
   $("feedbackArea").classList.remove("hidden");
