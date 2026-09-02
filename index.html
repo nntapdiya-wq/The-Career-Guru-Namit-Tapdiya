@@ -32,6 +32,8 @@ input,textarea,select{width:100%;padding:13px 15px;border:1px solid var(--border
 .topbar-actions{display:flex;gap:8px;flex-wrap:wrap}.secondary{background:#fff;color:var(--primary-dark);border:1px solid var(--border)}
 .notice{padding:12px 14px;border-radius:12px;background:#faf3ea;border:1px solid var(--border);font-size:.82rem}
 .result-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.assessment-progress{height:8px;background:#eee7df;border-radius:99px;overflow:hidden;margin:10px 0 18px}.assessment-progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--primary-dark),var(--primary));transition:width .25s}
+.question-card{border:1px solid var(--border);border-radius:14px;padding:16px;background:#fffdf9;margin:10px 0}.question-card h3{font-size:1rem;margin:0 0 12px}.answer-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.answer{padding:11px 12px;border:2px solid var(--border);background:#fff;border-radius:12px;text-align:left;cursor:pointer;color:var(--text)}.answer:hover{border-color:var(--primary)}.answer.selected{border-color:var(--primary-dark);background:#fff1e5}@media(max-width:600px){.answer-grid{grid-template-columns:1fr}}
 .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:14px}.stat{background:#fff8f2;border:1px solid var(--border);border-radius:12px;padding:12px}.stat strong{display:block;font-size:1.1rem}
 details{border-top:1px solid var(--border);padding:12px 0}summary{cursor:pointer;font-weight:700}
 </style>
@@ -60,6 +62,15 @@ details{border-top:1px solid var(--border);padding:12px 0}summary{cursor:pointer
 </div>
 <div style="margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap"><button id="generateBtn" class="button" type="button">Generate Smart Plan</button><span class="small">Recommendations are guidance, not guaranteed outcomes.</span></div>
 <div class="small" style="margin-top:10px">Tip: select the exam you are actually preparing for. You can choose more than one if you are genuinely considering multiple paths.</div>
+</section>
+
+<section class="card" id="assessment">
+<div class="section-title"><strong>AI Career Assessment</strong><span class="badge"><span id="assessmentCount">0</span>/15 answered</span></div>
+<div class="notice">These questions are designed to learn about your interests, strengths and preferred work style—not to force you into a career. There are no “correct” answers.</div>
+<div class="assessment-progress"><div id="assessmentProgress"></div></div>
+<div id="questionList"></div>
+<div class="result-actions"><button id="assessmentBtn" class="button" type="button">Use My Assessment</button><button id="assessmentClear" class="button secondary" type="button">Clear Answers</button></div>
+<div id="assessmentStatus" class="small" aria-live="polite"></div>
 </section>
 
 <section id="output" class="hidden" aria-live="polite">
@@ -112,11 +123,11 @@ async function loadCareerModel(){
     $("modelBadge").title="The site can still load, but AI recommendations require career-model.json.";
   }
 }
-function featureVector(stream,es,ts,prefs){
+function featureVector(stream,es,ts,prefs,assessmentFeatures=[]){
   if(!careerModel)return null;
   const v=new Array(careerModel.features.length).fill(0);
   const add=s=>{if(!s)return;const i=careerModel.features.indexOf(s);if(i>=0)v[i]=1};
-  add(stream);es.forEach(add);ts.forEach(add);
+  add(stream);es.forEach(add);ts.forEach(add);assessmentFeatures.forEach(add);
   const text=(prefs||"").toLowerCase();
   careerModel.features.forEach((f,i)=>{if(text.includes(f.replaceAll("-"," ")))v[i]=1});
   return v;
@@ -196,14 +207,56 @@ function setText(id,v){$(id).textContent=v}
 function error(v){$("errorMsg").textContent=v;$("errorMsg").classList.remove("hidden")}
 function clearError(){$("errorMsg").textContent="";$("errorMsg").classList.add("hidden")}
 function inferGoal(stream,es){const p=["neet","jee","upsc","ca","law","design","mba","hotel","nda"];const e=p.find(x=>es.includes(x));return e?pretty(e)+" Path":stream==="diploma"?"Vocational / Diploma Path":"Explore Multiple Tracks"}
-function scoreCareers(stream,es,ts,prefs){
-  lastFeatureVector=featureVector(stream,es,ts,prefs);
+function scoreCareers(stream,es,ts,prefs,assessment=[]){
+  lastFeatureVector=featureVector(stream,es,ts,prefs,assessment);
   if(!lastFeatureVector)return [];
   const pred=predictML(lastFeatureVector);
   lastPrediction=pred;
   return pred;
 }
 function step(parent,text){const d=document.createElement("div");d.className="plan-step";d.textContent=text;parent.appendChild(d)}
+const assessmentQuestions=[
+ {q:"Which type of problem do you enjoy most?",a:[["analytical","Finding patterns and logical solutions"],["people","Understanding or helping people"],["creative","Designing or creating something new"],["hands_on","Building, fixing or doing practical work"]]},
+ {q:"Which activity would you choose for a free afternoon?",a:[["technology","Building something with technology"],["research","Investigating a topic deeply"],["creative","Making a design, video or visual project"],["people","Teaching, helping or organising people"]]},
+ {q:"How do you feel about mathematics and numbers?",a:[["numerical","I genuinely enjoy them"],["numerical","I am comfortable with them"],["business","I like numbers when they solve real problems"],["verbal","I strongly prefer words and ideas"]]},
+ {q:"Which work environment sounds most appealing?",a:[["scientific","Laboratory / research setting"],["people","Hospital / classroom / community"],["technology","Technology / office environment"],["hands_on","Field / workshop / practical environment"]]},
+ {q:"What kind of impact would you value most?",a:[["health","Improving health and wellbeing"],["technology","Solving difficult technical problems"],["impact","Improving society or public systems"],["environment","Protecting nature and sustainability"]]},
+ {q:"How important is creativity in your ideal career?",a:[["creativity","It is essential"],["creativity","Very important"],["analytical","Useful, but not central"],["routine","I prefer clear, established methods"]]},
+ {q:"How do you prefer to work with other people?",a:[["leadership","I want to lead and make decisions"],["people","I want close collaboration"],["communication","I like explaining and persuading"],["autonomy","I prefer specialist independent work"]]},
+ {q:"Which statement describes your approach to difficult topics?",a:[["patience","I keep working until I understand them"],["analytical","I break them into smaller problems"],["research","I investigate until I find the answer"],["people","I discuss them with others"]]},
+ {q:"How comfortable are you with uncertainty?",a:[["ambiguity","I enjoy changing, uncertain situations"],["entrepreneurship","I am comfortable taking calculated risks"],["stability","I prefer predictable outcomes"],["routine","I like clear expectations"]]},
+ {q:"Which achievement would make you most proud?",a:[["research","Discovering something genuinely new"],["leadership","Leading a successful team or project"],["impact","Creating measurable positive change"],["creativity","Creating something people love"]]},
+ {q:"How much do you enjoy communicating?",a:[["communication","A lot—I enjoy speaking and writing"],["verbal","Quite a lot"],["people","Somewhat"],["analytical","I prefer focused independent work"]]},
+ {q:"How important is long-term study or training?",a:[["patience","I am comfortable with a long training path"],["academic","I enjoy deep academic study"],["stability","I prefer reaching work sooner"],["entrepreneurship","I want to start building things early"]]},
+ {q:"Which career priority matters most?",a:[["social-impact","Meaningful social impact"],["high-pay","Strong earning potential"],["work-life-balance","A sustainable work-life balance"],["entrepreneurship","Freedom to build my own path"]]},
+ {q:"What type of work would you enjoy most?",a:[["medicine","Helping diagnose or treat people"],["technology","Building software, systems or technology"],["finance","Analysing money, markets or business"],["design","Designing experiences, products or visuals"]]},
+ {q:"Which statement sounds most like you?",a:[["detail","I notice small errors and care about accuracy"],["empathy","I quickly understand how others feel"],["leadership","I naturally take responsibility"],["research","I am curious and keep asking 'why?'"]]}
+];
+const assessmentState=Array(assessmentQuestions.length).fill(null);
+function renderAssessment(){
+  const box=$("questionList");box.replaceChildren();
+  assessmentQuestions.forEach((item,qi)=>{
+    const card=document.createElement("div");card.className="question-card";
+    const h=document.createElement("h3");h.textContent=(qi+1)+". "+item.q;card.appendChild(h);
+    const grid=document.createElement("div");grid.className="answer-grid";
+    item.a.forEach(([token,label])=>{const b=document.createElement("button");b.type="button";b.className="answer"+(assessmentState[qi]===token?" selected":"");b.textContent=label;b.addEventListener("click",()=>{assessmentState[qi]=token;renderAssessment();});grid.appendChild(b)});
+    card.appendChild(grid);box.appendChild(card);
+  });
+  const n=assessmentState.filter(Boolean).length;$("assessmentCount").textContent=n;$("assessmentProgress").style.width=Math.round(n/assessmentQuestions.length*100)+"%";
+}
+function assessmentFeatures(){
+  const counts={};assessmentState.filter(Boolean).forEach(t=>counts[t]=(counts[t]||0)+1);
+  return Object.entries(counts).sort((a,b)=>b[1]-a[1]).flatMap(([t,n])=>Array(Math.min(n,3)).fill(t));
+}
+function clearAssessment(){
+  assessmentState.fill(null);renderAssessment();$("assessmentStatus").textContent="";
+}
+function useAssessment(){
+  const n=assessmentState.filter(Boolean).length;
+  if(n<assessmentQuestions.length){$("assessmentStatus").textContent="Please answer all 15 questions. There are no right or wrong answers.";return}
+  saveProfile();$("assessmentStatus").textContent="Assessment captured. Your next plan will use these answers.";
+  $("generateBtn").focus();
+}
 function saveProfile(){
 try{localStorage.setItem("careerGuruProfile",JSON.stringify({
 name:$("name").value,prefs:$("prefs").value,difficulties:$("difficulties").value,hours:$("hours").value,rank:$("rank").value,
@@ -234,7 +287,7 @@ const bad=[];es.forEach(e=>{if((e==="neet"||e==="jee")&&!["science","engineering
 if(bad.length){error(bad.join(", ")+" is not aligned with the selected stream. Change the stream or exam.");return}
 setText("outName",name);setText("outStream",pretty(stream));setText("outExams",es.map(pretty).join(", "));setText("outPrefs",prefs||"None");setText("outDiffs",diff||"None");setText("outHours",hours+" hrs/week");setText("outCareerPref",ts.length?ts.map(pretty).join(", "):"None");setText("outRank",$("rank").value.trim()||"N/A");setText("badgeGoal",inferGoal(stream,es));
 saveProfile();
-const ranked=scoreCareers(stream,es,ts,prefs);
+const ranked=scoreCareers(stream,es,ts,prefs,assessmentFeatures());
 if(!ranked.length){error("The learning model is not available yet. Please refresh and try again.");return}
 renderMLPrediction(ranked);
 const stats=$("careerStats");stats.replaceChildren();
@@ -256,14 +309,15 @@ step(out,"National coaching brands relevant to "+pretty(exam)+". This site does 
 (coachingByExam[exam]||coachingByExam.other).forEach(n=>step(out,n+" — verify the current "+city+" centre or online batch on the institute's official website."));
 step(out,"Before joining, verify the official branch address, fees, faculty, batch size, refund policy and recent results.");
 }
-makePills("streamWrapper",streams,true);makePills("examWrapper",exams,false);makePills("careerPrefWrapper",traits,false);populateCoaching();loadProfile();loadCareerModel();
+makePills("streamWrapper",streams,true);makePills("examWrapper",exams,false);makePills("careerPrefWrapper",traits,false);populateCoaching();renderAssessment();loadProfile();loadCareerModel();
 $("fitBtn").addEventListener("click",()=>{if(!lastPrediction?.[0]||!lastFeatureVector)return;learnFromFeedback(lastPrediction[0].y,lastFeatureVector);$("modelBadge").textContent="Model learned from your feedback";});
 $("notFitBtn").addEventListener("click",()=>{if(lastPrediction?.length>1){lastPrediction=lastPrediction.slice(1);renderMLPrediction(lastPrediction)}});
 
 $("resetBtn").addEventListener("click",resetAll);
 $("printBtn").addEventListener("click",()=>{if($("output").classList.contains("hidden")){error("Generate your plan before printing.");return}window.print()});
 ["name","prefs","difficulties","hours","rank"].forEach(id=>$(id).addEventListener("input",saveProfile));
-$("generateBtn").addEventListener("click",generate);$("coachBtn").addEventListener("click",findCoaching);$("coachCity").addEventListener("keydown",e=>{if(e.key==="Enter")findCoaching()});
+$("assessmentBtn").addEventListener("click",useAssessment);$("assessmentClear").addEventListener("click",clearAssessment);
+$("generateBtn").addEventListener("click",()=>{if(assessmentState.some(x=>!x)){ $("assessmentStatus").textContent="Complete the AI Career Assessment first."; $("assessment").scrollIntoView({behavior:"smooth",block:"start"}); return;} generate();});$("coachBtn").addEventListener("click",findCoaching);$("coachCity").addEventListener("keydown",e=>{if(e.key==="Enter")findCoaching()});
 </script>
 </body>
 </html>
