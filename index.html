@@ -68,7 +68,12 @@ details{border-top:1px solid var(--border);padding:12px 0}summary{cursor:pointer
 <div><strong>Interests:</strong> <span id="outPrefs"></span><br><strong>Weak Topics:</strong> <span id="outDiffs"></span><br><strong>Weekly Time:</strong> <span id="outHours"></span></div>
 <div><strong>Traits:</strong> <span id="outCareerPref"></span><br><strong>Rank:</strong> <span id="outRank"></span></div></div></section>
 
-<section class="card"><div class="section-title"><strong>Best Career Track</strong><span class="small">Ranked from your stream, exam, traits and interests</span></div><div id="bestTrackContainer"></div><div id="careerStats" class="stat-grid"></div></section>
+<section class="card"><div class="section-title"><strong>AI Career Match</strong><span class="badge" id="modelBadge">Loading model…</span></div>
+<div class="notice">This recommendation engine uses a nearest-neighbour machine-learning model rather than fixed career rules. It learns from explicit feedback saved locally on your device.</div>
+<div id="bestTrackContainer"></div><div id="careerStats" class="stat-grid"></div>
+<div id="feedbackArea" class="result-actions hidden"><button id="fitBtn" class="button secondary" type="button">This result fits me</button><button id="notFitBtn" class="button secondary" type="button">Show me different options</button></div>
+<div class="small" style="margin-top:10px">Model confidence is a similarity signal, not a probability of career success. The model has not been validated as a psychometric test.</div>
+</section>
 
 <section class="card"><div class="section-title"><strong>Indicative College Shortlist</strong><span class="small">Verify current admissions and eligibility on official sources</span></div><div id="topCollegesFiltered" class="top-colleges"></div><div id="collegeByRank"></div></section>
 
@@ -92,6 +97,65 @@ details{border-top:1px solid var(--border);padding:12px 0}summary{cursor:pointer
 
 <script>
 "use strict";
+let careerModel=null;
+let lastFeatureVector=null;
+let lastPrediction=null;
+const MODEL_KEY="careerGuruMLFeedback";
+async function loadCareerModel(){
+  try{
+    const res=await fetch("career-model.json",{cache:"no-store"});
+    if(!res.ok)throw new Error("Model unavailable");
+    careerModel=await res.json();
+    $("modelBadge").textContent="Learning model ready";
+  }catch(e){
+    $("modelBadge").textContent="Model unavailable";
+    $("modelBadge").title="The site can still load, but AI recommendations require career-model.json.";
+  }
+}
+function featureVector(stream,es,ts,prefs){
+  if(!careerModel)return null;
+  const v=new Array(careerModel.features.length).fill(0);
+  const add=s=>{if(!s)return;const i=careerModel.features.indexOf(s);if(i>=0)v[i]=1};
+  add(stream);es.forEach(add);ts.forEach(add);
+  const text=(prefs||"").toLowerCase();
+  careerModel.features.forEach((f,i)=>{if(text.includes(f.replaceAll("-"," ")))v[i]=1});
+  return v;
+}
+function cosine(a,b){
+  let dot=0,na=0,nb=0;
+  for(let i=0;i<a.length;i++){dot+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i]}
+  return na&&nb?dot/(Math.sqrt(na)*Math.sqrt(nb)):0;
+}
+function feedbackSamples(){
+  try{return JSON.parse(localStorage.getItem(MODEL_KEY)||"[]")}catch(e){return []}
+}
+function predictML(v){
+  const samples=[...(careerModel?.samples||[]),...feedbackSamples()];
+  const scored=samples.map(s=>{
+    const x=new Array(careerModel.features.length).fill(0);
+    s.x.forEach(f=>{const i=careerModel.features.indexOf(f);if(i>=0)x[i]=1});
+    return {y:s.y,sim:cosine(v,x)}
+  }).filter(s=>s.sim>0).sort((a,b)=>b.sim-a.sim);
+  const byClass=new Map();
+  scored.slice(0,9).forEach(s=>byClass.set(s.y,(byClass.get(s.y)||0)+Math.pow(Math.max(s.sim,0.001),3)));
+  const ranked=[...byClass.entries()].sort((a,b)=>b[1]-a[1]);
+  const total=ranked.reduce((a,b)=>a+b[1],0)||1;
+  return ranked.slice(0,5).map(([y,score])=>({name:careerModel.classes[y],score:Math.round(score/total*100),y}));
+}
+function learnFromFeedback(label,features){
+  const samples=feedbackSamples();
+  const x=careerModel.features.filter((_,i)=>features[i]);
+  samples.push({y:label,x,at:Date.now()});
+  localStorage.setItem(MODEL_KEY,JSON.stringify(samples.slice(-100)));
+}
+function renderMLPrediction(pred){
+  const best=$("bestTrackContainer");best.replaceChildren();
+  pred.forEach((p,i)=>{const d=document.createElement("div");d.className=i===0?"best-track":"plan-step";d.textContent=(i===0?"AI's strongest match: ":"Alternative learned match: ")+p.name+" ("+p.score+"% similarity signal)";best.appendChild(d)});
+  const stats=$("careerStats");stats.replaceChildren();
+  [["Model","Nearest-neighbour ML"],["Candidates",String(pred.length)],["Learning","Local feedback enabled"]].forEach(x=>{const d=document.createElement("div");d.className="stat";const a=document.createElement("strong");a.textContent=x[1];const b=document.createElement("span");b.className="small";b.textContent=x[0];d.append(a,b);stats.appendChild(d)});
+  $("feedbackArea").classList.remove("hidden");
+}
+
 const streams=[["science","Science"],["commerce","Commerce"],["arts","Arts"],["engineering","Engineering"],["hotel","Hotel Management"],["diploma","Diploma"],["other","Other"]];
 const exams=[["neet","NEET"],["jee","JEE"],["upsc","UPSC"],["ca","CA"],["law","Law"],["design","Design"],["mba","MBA"],["hotel","Hotel Mgmt"],["nda","NDA"],["other","Other"]];
 const traits=[["high-pay","High Pay"],["work-life-balance","Work-Life Balance"],["social-impact","Social Impact"],["entrepreneurship","Entrepreneurship"],["academic","Academic"],["creativity","Creativity"]];
@@ -167,8 +231,9 @@ const bad=[];es.forEach(e=>{if((e==="neet"||e==="jee")&&!["science","engineering
 if(bad.length){error(bad.join(", ")+" is not aligned with the selected stream. Change the stream or exam.");return}
 setText("outName",name);setText("outStream",pretty(stream));setText("outExams",es.map(pretty).join(", "));setText("outPrefs",prefs||"None");setText("outDiffs",diff||"None");setText("outHours",hours+" hrs/week");setText("outCareerPref",ts.length?ts.map(pretty).join(", "):"None");setText("outRank",$("rank").value.trim()||"N/A");setText("badgeGoal",inferGoal(stream,es));
 saveProfile();
-const best=$("bestTrackContainer");best.replaceChildren();const ranked=scoreCareers(stream,es,ts,prefs);
-ranked.slice(0,4).forEach((c,i)=>{const d=document.createElement("div");d.className=i===0?"best-track":"plan-step";d.textContent=(i===0?"Best match: ":"Alternative: ")+c.name+" (match score "+c.score+")";best.appendChild(d)});
+const ranked=scoreCareers(stream,es,ts,prefs);
+if(!ranked.length){error("The learning model is not available yet. Please refresh and try again.");return}
+renderMLPrediction(ranked);
 const stats=$("careerStats");stats.replaceChildren();
 [["Exam alignment",ranked[0]&&ranked[0].score>=50?"Strong":"Explore"],["Career options",String(ranked.length)],["Study load",hours+" h/week"]].forEach(x=>{const d=document.createElement("div");d.className="stat";d.innerHTML="<strong>"+x[1]+"</strong><span class='small'>"+x[0]+"</span>";stats.appendChild(d)});
 const colleges=$("topCollegesFiltered");colleges.replaceChildren();const seen=new Set();es.forEach(e=>(collegePools[e]||[]).forEach(c=>seen.add(c)));
@@ -188,7 +253,10 @@ step(out,"National coaching brands relevant to "+pretty(exam)+". This site does 
 (coachingByExam[exam]||coachingByExam.other).forEach(n=>step(out,n+" — verify the current "+city+" centre or online batch on the institute's official website."));
 step(out,"Before joining, verify the official branch address, fees, faculty, batch size, refund policy and recent results.");
 }
-makePills("streamWrapper",streams,true);makePills("examWrapper",exams,false);makePills("careerPrefWrapper",traits,false);populateCoaching();loadProfile();
+makePills("streamWrapper",streams,true);makePills("examWrapper",exams,false);makePills("careerPrefWrapper",traits,false);populateCoaching();loadProfile();loadCareerModel();
+$("fitBtn").addEventListener("click",()=>{if(!lastPrediction?.[0]||!lastFeatureVector)return;learnFromFeedback(lastPrediction[0].y,lastFeatureVector);$("modelBadge").textContent="Model learned from your feedback";});
+$("notFitBtn").addEventListener("click",()=>{if(lastPrediction?.length>1){lastPrediction=lastPrediction.slice(1);renderMLPrediction(lastPrediction)}});
+
 $("resetBtn").addEventListener("click",resetAll);
 $("printBtn").addEventListener("click",()=>{if($("output").classList.contains("hidden")){error("Generate your plan before printing.");return}window.print()});
 ["name","prefs","difficulties","hours","rank"].forEach(id=>$(id).addEventListener("input",saveProfile));
