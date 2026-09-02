@@ -5,7 +5,11 @@
 <meta name="google-site-verification" content="9nC8ZmbJn53iL6jEoPh0GI5TpBOeKJ7EyjmcVEAAy34">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The Career Guru | Namit Tapdiya</title>
-<meta name="description" content="Personalized career and exam guidance with career matching, study planning and indicative college shortlists.">
+<meta name="description" content="The Career Guru helps students explore careers, compare pathways, build study plans and understand indicative college options.">
+<meta name="theme-color" content="#c37f50">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://nntapdiya-wq.github.io/The-Career-Guru-Namit-Tapdiya/">
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap">
 <style>
@@ -22,11 +26,23 @@ input,textarea,select{width:100%;padding:13px 15px;border:1px solid var(--border
 .section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}.badge{display:inline-block;background:#f3e1d0;color:var(--primary-dark);padding:7px 12px;border-radius:10px;font-size:.75rem;font-weight:700}
 .small{font-size:.78rem;color:var(--muted)}.error{background:#ffe7e2;border:1px solid #ffb1a5;color:#9d3f28;padding:12px;border-radius:10px;margin-bottom:14px}.plan-step,.coach-result,.college-card{background:#fff8f2;border:1px solid var(--border);border-radius:12px;padding:13px;margin:8px 0}
 .college-card{background:#fff;min-width:190px;flex:1}.top-colleges{display:flex;flex-wrap:wrap;gap:8px}.best-track{border:2px solid var(--primary-dark);background:#fff8f2;border-radius:14px;padding:16px}.footer{text-align:center;color:var(--muted);font-size:.7rem;margin:28px 0}.hidden{display:none!important}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+@media (max-width:600px){.card{padding:18px}.header{align-items:flex-start}.brand{font-size:1.25rem}.button{width:100%}}
+.topbar-actions{display:flex;gap:8px;flex-wrap:wrap}.secondary{background:#fff;color:var(--primary-dark);border:1px solid var(--border)}
+.notice{padding:12px 14px;border-radius:12px;background:#faf3ea;border:1px solid var(--border);font-size:.82rem}
+.result-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:14px}.stat{background:#fff8f2;border:1px solid var(--border);border-radius:12px;padding:12px}.stat strong{display:block;font-size:1.1rem}
+details{border-top:1px solid var(--border);padding:12px 0}summary{cursor:pointer;font-weight:700}
 </style>
 </head>
 <body>
 <main class="container">
-<header class="header"><div class="brand">The Career Guru <span class="byline">By Namit Tapdiya</span></div><span class="badge">Smart Career & Exam Planner</span></header>
+<header class="header">
+<div class="brand">The Career Guru <span class="byline">By Namit Tapdiya</span></div>
+<div class="topbar-actions"><button id="resetBtn" class="button secondary" type="button">Reset</button><button id="printBtn" class="button secondary" type="button">Print Plan</button></div>
+</header>
+<div class="notice">🔒 Your profile is processed in this browser. This prototype does not send your form data to a server.</div>
 <p class="sub">Build a personalized career direction, study strategy and indicative college shortlist from your profile.</p>
 
 <section class="card">
@@ -43,6 +59,7 @@ input,textarea,select{width:100%;padding:13px 15px;border:1px solid var(--border
 <div><label class="label" for="rank">Estimated Rank</label><input id="rank" type="number" min="1" step="1" placeholder="e.g., 1500"><div class="small">Optional. Rank guidance is indicative, not an admission prediction.</div></div>
 </div>
 <div style="margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap"><button id="generateBtn" class="button" type="button">Generate Smart Plan</button><span class="small">Recommendations are guidance, not guaranteed outcomes.</span></div>
+<div class="small" style="margin-top:10px">Tip: select the exam you are actually preparing for. You can choose more than one if you are genuinely considering multiple paths.</div>
 </section>
 
 <section id="output" class="hidden" aria-live="polite">
@@ -51,13 +68,18 @@ input,textarea,select{width:100%;padding:13px 15px;border:1px solid var(--border
 <div><strong>Interests:</strong> <span id="outPrefs"></span><br><strong>Weak Topics:</strong> <span id="outDiffs"></span><br><strong>Weekly Time:</strong> <span id="outHours"></span></div>
 <div><strong>Traits:</strong> <span id="outCareerPref"></span><br><strong>Rank:</strong> <span id="outRank"></span></div></div></section>
 
-<section class="card"><div class="section-title"><strong>Best Career Track</strong><span class="small">Ranked from your stream, exam, traits and interests</span></div><div id="bestTrackContainer"></div></section>
+<section class="card"><div class="section-title"><strong>Best Career Track</strong><span class="small">Ranked from your stream, exam, traits and interests</span></div><div id="bestTrackContainer"></div><div id="careerStats" class="stat-grid"></div></section>
 
 <section class="card"><div class="section-title"><strong>Indicative College Shortlist</strong><span class="small">Verify current admissions and eligibility on official sources</span></div><div id="topCollegesFiltered" class="top-colleges"></div><div id="collegeByRank"></div></section>
 
 <section class="card"><div class="section-title"><strong>Study Strategy</strong><span class="small">Eight-week framework</span></div><div id="studyPlan"></div></section>
 <section class="card"><div class="section-title"><strong>Preparation Cycle</strong><span class="small">Goal → Learn → Practice → Test → Adjust</span></div><div id="examCycle"></div></section>
 <section class="card"><div class="section-title"><strong>Resources & Tips</strong></div><div id="resources"></div></section>
+<section class="card"><div class="section-title"><strong>How to use your plan</strong></div>
+<details><summary>Is this a guaranteed career prediction?</summary><p class="small">No. It is a decision-support tool. Career outcomes depend on performance, eligibility, preferences, changing admission rules and many factors not captured here.</p></details>
+<details><summary>How should I use the college shortlist?</summary><p class="small">Treat it as a starting point. Always check the institution's official admission page for the current year, eligibility, entrance route, fees, deadlines and counselling rules.</p></details>
+<details><summary>How are careers scored?</summary><p class="small">The prototype combines stream compatibility, selected exams, career traits and interest keywords. It is a heuristic—not a psychometric assessment.</p></details>
+</section>
 </section>
 
 <section class="card" id="coachingFinder">
@@ -65,7 +87,7 @@ input,textarea,select{width:100%;padding:13px 15px;border:1px solid var(--border
 <div class="grid two"><div><label class="label" for="coachExam">Exam</label><select id="coachExam"></select></div><div><label class="label" for="coachCity">City</label><input id="coachCity" list="cityList" placeholder="e.g., Pune"><datalist id="cityList"></datalist></div></div>
 <div style="margin-top:12px"><button id="coachBtn" class="button" type="button">Show Coaching</button></div><div id="coachResults" aria-live="polite"></div>
 </section>
-<footer class="footer">Designed by Namit Tapdiya. Verify official exam authorities, admission portals and institute websites before making high-stakes decisions.</footer>
+<footer class="footer">Designed by Namit Tapdiya. Verify official exam authorities, admission portals and institute websites before making high-stakes decisions.<br><span id="lastSaved"></span></footer>
 </main>
 
 <script>
@@ -111,9 +133,28 @@ function error(v){$("errorMsg").textContent=v;$("errorMsg").classList.remove("hi
 function clearError(){$("errorMsg").textContent="";$("errorMsg").classList.add("hidden")}
 function inferGoal(stream,es){const p=["neet","jee","upsc","ca","law","design","mba","hotel","nda"];const e=p.find(x=>es.includes(x));return e?pretty(e)+" Path":stream==="diploma"?"Vocational / Diploma Path":"Explore Multiple Tracks"}
 function scoreCareers(stream,es,ts,prefs){
+
 const words=(prefs.toLowerCase().match(/[a-z]+/g)||[]);
 return (careerDatabase[stream]||[]).map(c=>{let s=0;if(c[1].some(e=>es.includes(e)))s+=50;if(c[1].length===0)s+=10;s+=c[2].filter(t=>ts.includes(t)).length*15;s+=words.filter(w=>(c[0]+" "+c[2].join(" ")).toLowerCase().includes(w)).length*5;return {name:c[0],score:s}}).sort((a,b)=>b.score-a.score)}
 function step(parent,text){const d=document.createElement("div");d.className="plan-step";d.textContent=text;parent.appendChild(d)}
+function saveProfile(){
+try{localStorage.setItem("careerGuruProfile",JSON.stringify({
+name:$("name").value,prefs:$("prefs").value,difficulties:$("difficulties").value,hours:$("hours").value,rank:$("rank").value,
+stream:selected("streamWrapper"),exams:selected("examWrapper"),traits:selected("careerPrefWrapper")
+}));$("lastSaved").textContent="Profile saved locally in this browser."; }catch(e){}
+}
+function loadProfile(){
+try{const p=JSON.parse(localStorage.getItem("careerGuruProfile")||"null");if(!p)return;
+$("name").value=p.name||"";$("prefs").value=p.prefs||"";$("difficulties").value=p.difficulties||"";$("hours").value=p.hours||"";$("rank").value=p.rank||"";
+["streamWrapper","examWrapper","careerPrefWrapper"].forEach(id=>p[id==="streamWrapper"?"stream":id==="examWrapper"?"exams":"traits"].forEach(v=>{const b=$(id).querySelector('[data-value="'+CSS.escape(v)+'"]');if(b)b.classList.add("active")}));
+$("lastSaved").textContent="Saved profile restored locally.";
+}catch(e){}
+}
+function resetAll(){
+localStorage.removeItem("careerGuruProfile");["name","prefs","difficulties","hours","rank"].forEach(id=>$(id).value="");
+["streamWrapper","examWrapper","careerPrefWrapper"].forEach(id=>$(id).querySelectorAll(".active").forEach(b=>b.classList.remove("active")));
+$("output").classList.add("hidden");clearError();$("lastSaved").textContent="";
+}
 function generate(){
 clearError();
 const stream=selected("streamWrapper")[0],es=selected("examWrapper"),ts=selected("careerPrefWrapper");
@@ -125,8 +166,11 @@ if($("rank").value.trim()&&(!Number.isInteger(rank)||rank<1)){error("Enter a val
 const bad=[];es.forEach(e=>{if((e==="neet"||e==="jee")&&!["science","engineering"].includes(stream))bad.push(pretty(e));if(e==="ca"&&stream!=="commerce")bad.push(pretty(e));if(e==="hotel"&&stream!=="hotel")bad.push(pretty(e))});
 if(bad.length){error(bad.join(", ")+" is not aligned with the selected stream. Change the stream or exam.");return}
 setText("outName",name);setText("outStream",pretty(stream));setText("outExams",es.map(pretty).join(", "));setText("outPrefs",prefs||"None");setText("outDiffs",diff||"None");setText("outHours",hours+" hrs/week");setText("outCareerPref",ts.length?ts.map(pretty).join(", "):"None");setText("outRank",$("rank").value.trim()||"N/A");setText("badgeGoal",inferGoal(stream,es));
+saveProfile();
 const best=$("bestTrackContainer");best.replaceChildren();const ranked=scoreCareers(stream,es,ts,prefs);
 ranked.slice(0,4).forEach((c,i)=>{const d=document.createElement("div");d.className=i===0?"best-track":"plan-step";d.textContent=(i===0?"Best match: ":"Alternative: ")+c.name+" (match score "+c.score+")";best.appendChild(d)});
+const stats=$("careerStats");stats.replaceChildren();
+[["Exam alignment",ranked[0]&&ranked[0].score>=50?"Strong":"Explore"],["Career options",String(ranked.length)],["Study load",hours+" h/week"]].forEach(x=>{const d=document.createElement("div");d.className="stat";d.innerHTML="<strong>"+x[1]+"</strong><span class='small'>"+x[0]+"</span>";stats.appendChild(d)});
 const colleges=$("topCollegesFiltered");colleges.replaceChildren();const seen=new Set();es.forEach(e=>(collegePools[e]||[]).forEach(c=>seen.add(c)));
 if(!seen.size)step(colleges,"No fixed college shortlist is available for this pathway. Check the relevant official admission portal.");
 [...seen].slice(0,6).forEach(c=>{const d=document.createElement("div");d.className="college-card";const strong=document.createElement("strong");strong.textContent=c;const note=document.createElement("div");note.className="small";note.textContent="Indicative only — verify current eligibility, cut-offs and admissions.";d.append(strong,note);colleges.appendChild(d)});
@@ -144,7 +188,10 @@ step(out,"National coaching brands relevant to "+pretty(exam)+". This site does 
 (coachingByExam[exam]||coachingByExam.other).forEach(n=>step(out,n+" — verify the current "+city+" centre or online batch on the institute's official website."));
 step(out,"Before joining, verify the official branch address, fees, faculty, batch size, refund policy and recent results.");
 }
-makePills("streamWrapper",streams,true);makePills("examWrapper",exams,false);makePills("careerPrefWrapper",traits,false);populateCoaching();
+makePills("streamWrapper",streams,true);makePills("examWrapper",exams,false);makePills("careerPrefWrapper",traits,false);populateCoaching();loadProfile();
+$("resetBtn").addEventListener("click",resetAll);
+$("printBtn").addEventListener("click",()=>{if($("output").classList.contains("hidden")){error("Generate your plan before printing.");return}window.print()});
+["name","prefs","difficulties","hours","rank"].forEach(id=>$(id).addEventListener("input",saveProfile));
 $("generateBtn").addEventListener("click",generate);$("coachBtn").addEventListener("click",findCoaching);$("coachCity").addEventListener("keydown",e=>{if(e.key==="Enter")findCoaching()});
 </script>
 </body>
