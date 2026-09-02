@@ -1,0 +1,10 @@
+{
+  "name":"The Career Guru",
+  "short_name":"Career Guru",
+  "start_url":"/The-Career-Guru-Namit-Tapdiya/",
+  "display":"standalone",
+  "background_color":"#f7f4ef",
+  "theme_color":"#c37f50",
+  "description":"Career exploration and study planning tool by Namit Tapdiya",
+  "icons":[]
+}
