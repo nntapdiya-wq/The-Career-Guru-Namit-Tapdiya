@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nntapdiya-wq.github.io/The-Career-Guru-Namit-Tapdiya/sitemap.xml
